@@ -1,0 +1,396 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+export default function OpeningScene() {
+  const sectionRef  = useRef<HTMLElement>(null);
+  const bgRef       = useRef<HTMLDivElement>(null);
+  const line1Ref    = useRef<HTMLHeadingElement>(null);
+  const line2Ref    = useRef<HTMLParagraphElement>(null);
+  const dividerRef  = useRef<HTMLDivElement>(null);
+  const line3Ref    = useRef<HTMLParagraphElement>(null);
+  const line4Ref    = useRef<HTMLParagraphElement>(null);
+  const dateRef     = useRef<HTMLDivElement>(null);
+  const scrollRef   = useRef<HTMLDivElement>(null);
+  const petal1Ref   = useRef<HTMLDivElement>(null);
+  const petal2Ref   = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=280%",
+          scrub: 2,
+          pin: true,
+          pinSpacing: true,
+        },
+      });
+
+      // 1. Warm background blooms in
+      tl.to(bgRef.current, { opacity: 1, duration: 0.25, ease: "power2.inOut" });
+
+      // 2. Decorative petals drift in
+      tl.fromTo(
+        petal1Ref.current,
+        { opacity: 0, x: -60, y: 20, rotate: -15 },
+        { opacity: 0.55, x: 0, y: 0, rotate: 0, duration: 0.3, ease: "power2.out" },
+        "-=0.1"
+      );
+      tl.fromTo(
+        petal2Ref.current,
+        { opacity: 0, x: 60, y: -20, rotate: 15 },
+        { opacity: 0.55, x: 0, y: 0, rotate: 0, duration: 0.3, ease: "power2.out" },
+        "<"
+      );
+
+      // 3. First lyric line blooms up
+      tl.fromTo(
+        line1Ref.current,
+        { opacity: 0, y: 50, filter: "blur(14px)", scale: 0.95 },
+        { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "power3.out" },
+        "+=0.05"
+      );
+
+      // 4. Second lyric line
+      tl.fromTo(
+        line2Ref.current,
+        { opacity: 0, y: 30, filter: "blur(8px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" },
+        "+=0.04"
+      );
+
+      // 5. Divider line
+      tl.fromTo(
+        dividerRef.current,
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.2, ease: "power2.out" },
+        "+=0.06"
+      );
+
+      // 6. Third line (handwritten)
+      tl.fromTo(
+        line3Ref.current,
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
+        "+=0.04"
+      );
+
+      // 7. Fourth line fades in
+      tl.fromTo(
+        line4Ref.current,
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" },
+        "+=0.03"
+      );
+
+      // 8. Date stamp at the end
+      tl.fromTo(
+        dateRef.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" },
+        "+=0.04"
+      );
+
+      // 9. Scroll hint fades out
+      tl.to(scrollRef.current, { opacity: 0, duration: 0.15 });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="opening"
+      style={{
+        height: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        background: "#fffcf8",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* Warm gradient background */}
+      <div
+        ref={bgRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "radial-gradient(ellipse at 50% 40%, #fce7eb 0%, #fdf5f0 40%, #fffcf8 100%)",
+          opacity: 0,
+          zIndex: 0,
+        }}
+      />
+
+      {/* Ambient Rose Light Leaks */}
+      <div
+        className="light-leak"
+        style={{
+          top: "-20%",
+          left: "10%",
+          width: "65%",
+          height: "70%",
+          background: "radial-gradient(circle, rgba(244,63,94,0.13) 0%, transparent 70%)",
+          zIndex: 1,
+        }}
+      />
+      <div
+        className="light-leak"
+        style={{
+          bottom: "-15%",
+          right: "5%",
+          width: "55%",
+          height: "60%",
+          background: "radial-gradient(circle, rgba(225,29,72,0.09) 0%, transparent 70%)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Film label top-left */}
+      <div style={{ position: "absolute", top: "24px", left: "28px", zIndex: 10 }}>
+        <span className="film-edge">KODAK 400TX · SAFETY FILM</span>
+      </div>
+
+      {/* LED date top-right */}
+      <div
+        style={{
+          position: "absolute",
+          top: "24px",
+          right: "28px",
+          zIndex: 10,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        <div
+          style={{
+            width: "7px",
+            height: "7px",
+            borderRadius: "50%",
+            background: "#f43f5e",
+            boxShadow: "0 0 8px rgba(244,63,94,0.8)",
+            animation: "recDot 1.8s ease-in-out infinite",
+          }}
+        />
+        <span className="led-date">OCT 14, 2023 · 06:42 PM</span>
+      </div>
+
+      {/* Decorative petal ornaments */}
+      <div
+        ref={petal1Ref}
+        style={{
+          position: "absolute",
+          left: "clamp(40px, 8vw, 120px)",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 3,
+          opacity: 0,
+          fontSize: "clamp(3rem, 7vw, 6rem)",
+          lineHeight: 1,
+          color: "rgba(244,63,94,0.22)",
+          userSelect: "none",
+          fontFamily: "serif",
+        }}
+      >
+        ✿
+      </div>
+      <div
+        ref={petal2Ref}
+        style={{
+          position: "absolute",
+          right: "clamp(40px, 8vw, 120px)",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 3,
+          opacity: 0,
+          fontSize: "clamp(3rem, 7vw, 6rem)",
+          lineHeight: 1,
+          color: "rgba(244,63,94,0.22)",
+          userSelect: "none",
+          fontFamily: "serif",
+        }}
+      >
+        ✿
+      </div>
+
+      {/* ── Main Cinematic Text Block ── */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          padding: "0 clamp(2rem, 8vw, 6rem)",
+          maxWidth: "860px",
+          gap: "0",
+        }}
+      >
+        {/* Chapter eyebrow */}
+        <span
+          className="film-edge"
+          style={{
+            fontSize: "0.65rem",
+            letterSpacing: "0.32em",
+            color: "#be123c",
+            marginBottom: "1.6rem",
+          }}
+        >
+          FOR YOU — A LOVE STORY
+        </span>
+
+        {/* Main lyric — display serif italic */}
+        <h1
+          ref={line1Ref}
+          className="font-display"
+          style={{
+            fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
+            fontWeight: 300,
+            fontStyle: "italic",
+            color: "#2b141e",
+            lineHeight: 1.18,
+            letterSpacing: "-0.015em",
+            opacity: 0,
+            marginBottom: "0.6rem",
+            textShadow: "0 4px 30px rgba(244,63,94,0.1)",
+          }}
+        >
+          &ldquo;They will be in love with you...
+        </h1>
+        <p
+          ref={line2Ref}
+          className="font-display"
+          style={{
+            fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
+            fontWeight: 300,
+            fontStyle: "italic",
+            color: "#be123c",
+            lineHeight: 1.18,
+            letterSpacing: "-0.015em",
+            opacity: 0,
+            marginBottom: "2.8rem",
+            textShadow: "0 4px 30px rgba(244,63,94,0.18)",
+          }}
+        >
+          and you will be in love with them.&rdquo;
+        </p>
+
+        {/* Decorative divider line with rose dot */}
+        <div
+          ref={dividerRef}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+            width: "280px",
+            marginBottom: "2.2rem",
+            opacity: 0,
+          }}
+        >
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(244,63,94,0.4))" }} />
+          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f43f5e", boxShadow: "0 0 8px rgba(244,63,94,0.6)" }} />
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(244,63,94,0.4), transparent)" }} />
+        </div>
+
+        {/* Handwritten sub line */}
+        <p
+          ref={line3Ref}
+          className="font-handwritten"
+          style={{
+            fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)",
+            color: "#be123c",
+            opacity: 0,
+            lineHeight: 1.5,
+            marginBottom: "0.4rem",
+          }}
+        >
+          &ldquo;look at you, you&rsquo;re so pretty...&rdquo;
+        </p>
+        <p
+          ref={line4Ref}
+          className="font-handwritten"
+          style={{
+            fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)",
+            color: "#9e3b56",
+            opacity: 0,
+            lineHeight: 1.6,
+            marginBottom: "2.4rem",
+          }}
+        >
+          — Girl in Red
+        </p>
+
+        {/* Date stamp */}
+        <div ref={dateRef} style={{ opacity: 0 }}>
+          <span
+            className="led-date"
+            style={{
+              fontSize: "0.78rem",
+              letterSpacing: "0.2em",
+              color: "#be123c",
+            }}
+          >
+            October 2023
+          </span>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div
+        ref={scrollRef}
+        style={{
+          position: "absolute",
+          bottom: "40px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "10px",
+          zIndex: 10,
+        }}
+      >
+        <span
+          style={{
+            fontSize: "0.65rem",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            color: "#9e3b56",
+          }}
+        >
+          Scroll to unfold our story
+        </span>
+        <div
+          style={{
+            width: "1px",
+            height: "36px",
+            background: "linear-gradient(180deg, #f43f5e 0%, transparent 100%)",
+            animation: "scrollPulse 2s ease-in-out infinite",
+          }}
+        />
+      </div>
+
+      <style>{`
+        @keyframes scrollPulse {
+          0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+          50%       { opacity: 1;   transform: scaleY(1.1); }
+        }
+        @keyframes recDot {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.3; }
+        }
+      `}</style>
+    </section>
+  );
+}

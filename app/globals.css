@@ -1,26 +1,180 @@
 @import "tailwindcss";
 
+/* ─── Root Variables (Light Romantic Cream & Rose Theme) ────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --cream:        #2b141e;   /* Main readable text color */
+  --cream-soft:   #5c2e40;   /* Muted text color */
+  --blush:        #e11d48;   /* Accent rose pink */
+  --rose:         #f43f5e;
+  --velvet:       #be123c;
+  --deep-velvet:  #881337;
+  --wine:         #4c0519;
+  --night:        #fffcf8;   /* Light mode main bg */
+  --deep-night:   #fdf6f0;   /* Secondary light bg */
+  --star:         #be123c;
+  --mist:         rgba(244,63,94,0.06);
+  --paper:        #ffffff;
+  --gold-glow:    #d97706;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #fffcf8;
+  color: #2b141e;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  selection-background-color: rgba(244,63,94,0.2);
+}
+
+/* ─── Typography ───────────────────────────────────────────────────── */
+.font-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-handwritten {
+  font-family: 'Caveat', cursive;
+}
+
+.font-script {
+  font-family: 'Sacramento', cursive;
+}
+
+/* ─── Soft Ambient Grain Overlay ───────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  mix-blend-mode: multiply;
+}
+
+/* ─── Handcrafted Light Polaroid Frame ──────────────────────────────── */
+.polaroid-card {
+  background: #ffffff;
+  padding: 14px 14px 44px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(244, 63, 94, 0.12);
+  box-shadow: 
+    0 12px 30px -6px rgba(180, 80, 100, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
+  position: relative;
+}
+
+.polaroid-card:hover {
+  transform: translateY(-8px) rotate(0deg) scale(1.02) !important;
+  box-shadow: 
+    0 22px 45px -8px rgba(180, 60, 90, 0.25),
+    0 0 25px rgba(244, 63, 94, 0.18);
+  z-index: 20;
+}
+
+/* Washi tape visual effect in soft blush tint */
+.polaroid-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 90px;
+  height: 26px;
+  background: rgba(244, 63, 94, 0.14);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  z-index: 10;
+}
+
+/* Analog Camera LED Date Stamp (Rose Pink) */
+.led-date {
+  font-family: monospace;
+  color: #e11d48;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-shadow: 0 0 8px rgba(225, 29, 72, 0.4);
+}
+
+/* Film Roll Edge Markers */
+.film-edge {
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: rgba(190, 18, 60, 0.6);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ─── Glassmorphism Premium (Light Soft Rose) ──────────────────────── */
+.glass-panel {
+  background: rgba(255, 252, 248, 0.85);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid rgba(244, 63, 94, 0.18);
+  box-shadow: 0 12px 35px rgba(180, 80, 100, 0.12);
+}
+
+/* ─── Light Leak ───────────────────────────────────────────────────── */
+.light-leak {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  pointer-events: none;
+}
+
+/* ─── Scrollbar ────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #fffcf8; }
+::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 3px; }
+
+/* ─── Pulse animation for heart ────────────────────────────────────── */
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(244,63,94,0.4)); }
+  30%       { transform: scale(1.22); filter: drop-shadow(0 0 25px rgba(225,29,72,0.6)); }
+  60%       { transform: scale(0.95); filter: drop-shadow(0 0 8px rgba(244,63,94,0.2)); }
+  80%       { transform: scale(1.16); filter: drop-shadow(0 0 20px rgba(225,29,72,0.5)); }
+}
+
+.heart-pulse {
+  animation: heartPulse 2.2s ease-in-out infinite;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  color: #f43f5e;
+}
+
+.heart-pulse:hover {
+  transform: scale(1.35) !important;
+}
+
+/* ─── Vinyl Record Spinning Animation ─────────────────────────────── */
+@keyframes vinylSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.vinyl-spinning {
+  animation: vinylSpin 8s linear infinite;
+}
+
+/* ─── Chapter separators ───────────────────────────────────────────── */
+.chapter-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #f43f5e, transparent);
+  margin: 1.2rem auto;
 }
