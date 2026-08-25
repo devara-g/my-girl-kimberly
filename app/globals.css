@@ -42,7 +42,7 @@ body {
   selection-background-color: rgba(59,130,246,0.25);
 }
 
-/* ─── Typography ───────────────────────────────────────────────────── */
+/* ─── Typography & GPU Compositing ─────────────────────────────────── */
 .font-display {
   font-family: 'Cormorant Garamond', Georgia, serif;
 }
@@ -53,6 +53,19 @@ body {
 
 .font-script {
   font-family: 'Sacramento', cursive;
+}
+
+/* GPU Hardware Acceleration for 60fps buttery smooth scrolling */
+.font-display,
+.font-handwritten,
+.polaroid-card,
+.collage-card,
+.film-edge,
+.led-date,
+.glass-panel {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* ─── Soft Ambient Grain Overlay ───────────────────────────────────── */

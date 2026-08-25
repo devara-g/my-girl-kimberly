@@ -42,10 +42,14 @@ function AuroraCanvas() {
       "224,242,254",  // mist
     ];
 
-    const orbs: Orb[] = Array.from({ length: 14 }, () => ({
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+    const orbCount = isMobile ? 6 : 12;
+    const starCount = isMobile ? 40 : 100;
+
+    const orbs: Orb[] = Array.from({ length: orbCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 220 + 80,
+      r: Math.random() * 180 + 70,
       vx: (Math.random() - 0.5) * 0.22,
       vy: (Math.random() - 0.5) * 0.18,
       color: palette[Math.floor(Math.random() * palette.length)],
@@ -56,7 +60,7 @@ function AuroraCanvas() {
 
     // Twinkling star dots
     type Star = { x: number; y: number; r: number; alpha: number; phase: number; speed: number };
-    const stars: Star[] = Array.from({ length: 120 }, () => ({
+    const stars: Star[] = Array.from({ length: starCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 1.2 + 0.3,
@@ -150,16 +154,16 @@ export default function ChapterOne() {
       });
 
       tl.fromTo(labelRef.current,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 16 },
         { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }
       );
       tl.fromTo(textRef.current,
-        { opacity: 0, y: 40, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.35, ease: "power2.out" },
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
         "+=0.05"
       );
       tl.fromTo(noteRef.current,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 18 },
         { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
         "+=0.05"
       );

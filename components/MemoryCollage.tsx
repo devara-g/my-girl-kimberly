@@ -82,13 +82,12 @@ export default function MemoryCollage() {
       // Title reveal
       gsap.fromTo(
         titleRef.current,
-        { opacity: 0, y: 30, filter: "blur(8px)" },
+        { opacity: 0, y: 24 },
         {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
-          duration: 1.4,
-          ease: "power3.out",
+          duration: 1.0,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top 75%",
@@ -101,18 +100,17 @@ export default function MemoryCollage() {
         if (!el) return;
         gsap.fromTo(
           el,
-          { opacity: 0, scale: 0.88, y: 35, filter: "blur(8px)" },
+          { opacity: 0, scale: 0.94, y: 28 },
           {
             opacity: 1,
             scale: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 1.1,
-            delay: i * 0.07,
+            duration: 0.8,
+            delay: i * 0.08,
             ease: "power2.out",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 65%",
+              start: "top 70%",
               toggleActions: "play none none none",
             },
           }

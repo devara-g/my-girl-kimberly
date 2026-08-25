@@ -69,7 +69,10 @@ export default function FloatingHearts() {
     resize();
     window.addEventListener("resize", resize);
 
-    flowers = Array.from({ length: 12 }, () => {
+    const isMobile = window.innerWidth < 768;
+    const flowerCount = isMobile ? 14 : 20;
+
+    flowers = Array.from({ length: flowerCount }, () => {
       const f = createFlower();
       f.y = Math.random() * H;
       return f;

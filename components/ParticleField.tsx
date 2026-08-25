@@ -49,8 +49,11 @@ export default function ParticleField({ count = 55 }: { count?: number }) {
       color: COLORS[Math.floor(Math.random() * COLORS.length)],
     });
 
+    const isMobile = window.innerWidth < 768;
+    const effectiveCount = isMobile ? Math.min(count, 18) : count;
+
     resize();
-    particles = Array.from({ length: count }, spawn);
+    particles = Array.from({ length: effectiveCount }, spawn);
     window.addEventListener("resize", resize);
 
     const draw = () => {

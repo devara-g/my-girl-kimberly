@@ -77,11 +77,11 @@ export default function EmotionalBuild() {
         "<"
       );
 
-      // Line 1 fades in with blur reveal
+      // Line 1 fades in with smooth reveal
       tl.fromTo(
         line1Ref.current,
-        { opacity: 0, y: 32, filter: "blur(12px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" },
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
         "+=0.06"
       );
 
@@ -91,8 +91,8 @@ export default function EmotionalBuild() {
       // Line 2 fades in
       tl.fromTo(
         line2Ref.current,
-        { opacity: 0, y: 26, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" },
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" },
         "+=0.04"
       );
 

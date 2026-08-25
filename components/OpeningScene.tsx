@@ -51,16 +51,16 @@ export default function OpeningScene() {
       // 3. First lyric line blooms up
       tl.fromTo(
         line1Ref.current,
-        { opacity: 0, y: 50, filter: "blur(14px)", scale: 0.95 },
-        { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 0.35, ease: "power3.out" },
+        { opacity: 0, y: 36, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" },
         "+=0.05"
       );
 
       // 4. Second lyric line
       tl.fromTo(
         line2Ref.current,
-        { opacity: 0, y: 30, filter: "blur(8px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.28, ease: "power2.out" },
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.28, ease: "power2.out" },
         "+=0.04"
       );
 
