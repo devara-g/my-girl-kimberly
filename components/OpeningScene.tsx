@@ -144,36 +144,41 @@ export default function OpeningScene() {
         }}
       />
 
-      {/* Film label top-left */}
-      <div className="opening-top-left" style={{ position: "absolute", top: "24px", left: "28px", zIndex: 10 }}>
-        <span className="film-edge">KODAK 400TX · SAFETY FILM</span>
-      </div>
-
-      {/* LED date top-right */}
-      <div
-        className="opening-top-right"
+      {/* Top Film Header Bar (Responsive & Non-overlapping) */}
+      <header
         style={{
           position: "absolute",
-          top: "24px",
-          right: "28px",
-          zIndex: 10,
+          top: 0,
+          left: 0,
+          right: 0,
+          padding: "clamp(14px, 3vh, 24px) clamp(16px, 4vw, 28px)",
           display: "flex",
           alignItems: "center",
-          gap: "8px",
+          justifyContent: "space-between",
+          zIndex: 10,
+          gap: "12px",
         }}
       >
-        <div
-          style={{
-            width: "7px",
-            height: "7px",
-            borderRadius: "50%",
-            background: "#0284c7",
-            boxShadow: "0 0 8px rgba(2,132,199,0.8)",
-            animation: "recDot 1.8s ease-in-out infinite",
-          }}
-        />
-        <span className="led-date">AUG 25, 2010 · A STAR WAS BORN</span>
-      </div>
+        <span className="film-edge" style={{ fontSize: "clamp(0.52rem, 1.2vw, 0.62rem)" }}>
+          KODAK 400TX
+        </span>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <div
+            style={{
+              width: "6px",
+              height: "6px",
+              borderRadius: "50%",
+              background: "#0284c7",
+              boxShadow: "0 0 8px rgba(2,132,199,0.8)",
+              animation: "recDot 1.8s ease-in-out infinite",
+            }}
+          />
+          <span className="led-date" style={{ fontSize: "clamp(0.56rem, 1.3vw, 0.68rem)" }}>
+            AUG 25, 2010
+          </span>
+        </div>
+      </header>
 
       {/* Decorative petal ornaments */}
       <div
