@@ -17,11 +17,11 @@ interface Leaf {
 }
 
 const LEAF_COLORS = [
-  "rgba(212, 133, 74, ", // Amber
-  "rgba(196, 92, 46, ",  // Sunset orange
-  "rgba(201, 123, 123, ", // Rose
-  "rgba(232, 196, 176, ", // Cream blush
-  "rgba(168, 70, 35, ",  // Deep autumn red
+  "rgba(96, 165, 250, ",  // Sky blue
+  "rgba(59, 130, 246, ",  // Royal blue
+  "rgba(147, 197, 253, ", // Powder baby blue
+  "rgba(186, 230, 253, ", // Ice blue
+  "rgba(56, 189, 248, ",  // Light cyan
 ];
 
 export default function FallingLeaves() {

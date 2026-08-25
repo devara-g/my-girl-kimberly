@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
-/* ─── Root Variables (Light Romantic Cream & Rose Theme) ────────────── */
+/* ─── Root Variables (Daniel Caesar Soft Sky & Baby Blue Theme) ────── */
 :root {
-  --cream:        #2b141e;   /* Main readable text color */
-  --cream-soft:   #5c2e40;   /* Muted text color */
-  --blush:        #e11d48;   /* Accent rose pink */
-  --rose:         #f43f5e;
-  --velvet:       #be123c;
-  --deep-velvet:  #881337;
-  --wine:         #4c0519;
-  --night:        #fffcf8;   /* Light mode main bg */
-  --deep-night:   #fdf6f0;   /* Secondary light bg */
-  --star:         #be123c;
-  --mist:         rgba(244,63,94,0.06);
+  --cream:        #0f1d36;   /* Main readable deep slate navy text */
+  --cream-soft:   #334e68;   /* Muted steel slate text */
+  --blush:        #2563eb;   /* Vibrant sapphire / royal blue accent */
+  --rose:         #3b82f6;   /* Sky blue */
+  --velvet:       #1d4ed8;   /* Deep electric blue */
+  --deep-velvet:  #1e3a8a;   /* Midnight ocean blue */
+  --wine:         #0b1329;   /* Slate navy dark tone */
+  --night:        #f4f8fd;   /* Light mode main bg (ethereal soft cloud blue) */
+  --deep-night:   #eaf2fb;   /* Secondary light bg */
+  --star:         #2563eb;
+  --mist:         rgba(59,130,246,0.06);
   --paper:        #ffffff;
-  --gold-glow:    #d97706;
+  --gold-glow:    #38bdf8;
 }
 
 /* ─── Base Reset ───────────────────────────────────────────────────── */
@@ -29,13 +29,13 @@ html {
 }
 
 body {
-  background: #fffcf8;
-  color: #2b141e;
+  background: #f4f8fd;
+  color: #0f1d36;
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  selection-background-color: rgba(244,63,94,0.2);
+  selection-background-color: rgba(59,130,246,0.25);
 }
 
 /* ─── Typography ───────────────────────────────────────────────────── */
@@ -57,7 +57,7 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 128px 128px;
@@ -69,10 +69,10 @@ body {
   background: #ffffff;
   padding: 14px 14px 44px 14px;
   border-radius: 4px;
-  border: 1px solid rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   box-shadow: 
-    0 12px 30px -6px rgba(180, 80, 100, 0.15),
-    0 4px 12px rgba(0, 0, 0, 0.05);
+    0 12px 30px -6px rgba(37, 99, 235, 0.12),
+    0 4px 12px rgba(15, 29, 54, 0.04);
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease;
   position: relative;
 }
@@ -80,12 +80,12 @@ body {
 .polaroid-card:hover {
   transform: translateY(-8px) rotate(0deg) scale(1.02) !important;
   box-shadow: 
-    0 22px 45px -8px rgba(180, 60, 90, 0.25),
-    0 0 25px rgba(244, 63, 94, 0.18);
+    0 22px 45px -8px rgba(37, 99, 235, 0.22),
+    0 0 25px rgba(59, 130, 246, 0.18);
   z-index: 20;
 }
 
-/* Washi tape visual effect in soft blush tint */
+/* Washi tape visual effect in soft baby blue tint */
 .polaroid-tape {
   position: absolute;
   top: -12px;
@@ -93,20 +93,20 @@ body {
   transform: translateX(-50%) rotate(-2deg);
   width: 90px;
   height: 26px;
-  background: rgba(244, 63, 94, 0.14);
+  background: rgba(96, 165, 250, 0.22);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 2px 6px rgba(15, 29, 54, 0.06);
   z-index: 10;
 }
 
-/* Analog Camera LED Date Stamp (Rose Pink) */
+/* Analog Camera LED Date Stamp (Cyan Sky Blue) */
 .led-date {
   font-family: monospace;
-  color: #e11d48;
+  color: #0284c7;
   font-size: 0.75rem;
   letter-spacing: 0.15em;
-  text-shadow: 0 0 8px rgba(225, 29, 72, 0.4);
+  text-shadow: 0 0 8px rgba(2, 132, 199, 0.45);
 }
 
 /* Film Roll Edge Markers */
@@ -114,18 +114,18 @@ body {
   font-family: monospace;
   font-size: 0.65rem;
   letter-spacing: 0.2em;
-  color: rgba(190, 18, 60, 0.6);
+  color: rgba(29, 78, 216, 0.75);
   text-transform: uppercase;
   font-weight: 500;
 }
 
-/* ─── Glassmorphism Premium (Light Soft Rose) ──────────────────────── */
+/* ─── Glassmorphism Premium (Light Soft Sky Blue) ──────────────────── */
 .glass-panel {
-  background: rgba(255, 252, 248, 0.85);
+  background: rgba(244, 248, 253, 0.88);
   backdrop-filter: blur(20px) saturate(1.5);
   -webkit-backdrop-filter: blur(20px) saturate(1.5);
-  border: 1px solid rgba(244, 63, 94, 0.18);
-  box-shadow: 0 12px 35px rgba(180, 80, 100, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 12px 35px rgba(37, 99, 235, 0.1);
 }
 
 /* ─── Light Leak ───────────────────────────────────────────────────── */
@@ -138,15 +138,15 @@ body {
 
 /* ─── Scrollbar ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #fffcf8; }
-::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 3px; }
+::-webkit-scrollbar-track { background: #f4f8fd; }
+::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 3px; }
 
 /* ─── Pulse animation for heart ────────────────────────────────────── */
 @keyframes heartPulse {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(244,63,94,0.4)); }
-  30%       { transform: scale(1.22); filter: drop-shadow(0 0 25px rgba(225,29,72,0.6)); }
-  60%       { transform: scale(0.95); filter: drop-shadow(0 0 8px rgba(244,63,94,0.2)); }
-  80%       { transform: scale(1.16); filter: drop-shadow(0 0 20px rgba(225,29,72,0.5)); }
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(59,130,246,0.4)); }
+  30%       { transform: scale(1.22); filter: drop-shadow(0 0 25px rgba(37,99,235,0.6)); }
+  60%       { transform: scale(0.95); filter: drop-shadow(0 0 8px rgba(59,130,246,0.2)); }
+  80%       { transform: scale(1.16); filter: drop-shadow(0 0 20px rgba(37,99,235,0.5)); }
 }
 
 .heart-pulse {
@@ -154,7 +154,7 @@ body {
   display: inline-block;
   cursor: pointer;
   transition: transform 0.3s ease;
-  color: #f43f5e;
+  color: #3b82f6;
 }
 
 .heart-pulse:hover {
@@ -175,6 +175,6 @@ body {
 .chapter-line {
   width: 60px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #f43f5e, transparent);
+  background: linear-gradient(90deg, transparent, #3b82f6, transparent);
   margin: 1.2rem auto;
 }

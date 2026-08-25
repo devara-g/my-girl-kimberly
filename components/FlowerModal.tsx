@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { CloseIcon } from "./Icons";
 
 interface Props {
@@ -40,7 +39,6 @@ function Rose({
   rings: RoseRing[];
   delay: number;
 }) {
-  // Render outer rings first (behind), inner rings last (on top)
   return (
     <>
       {rings.map((ring, ri) => (
@@ -50,7 +48,6 @@ function Rose({
               pi * (360 / ring.count) +
               (ring.offset ?? 0) +
               ri * (180 / ring.count);
-            // inner rings bloom first
             const ringDelay = delay + (rings.length - 1 - ri) * 0.28 + pi * 0.04;
             return (
               <g
@@ -76,7 +73,7 @@ function Rose({
         cx={cx}
         cy={cy}
         r={rings[rings.length - 1]?.w ? rings[rings.length - 1].w * 0.55 : 4}
-        fill="#ffccd5"
+        fill="#bae6fd"
         style={{
           transformBox: "fill-box" as const,
           transformOrigin: "center center",
@@ -115,7 +112,7 @@ function Tulip({ cx, cy, delay }: { cx: number; cy: number; delay: number }) {
         cx={cx}
         cy={cy - 10}
         r={3}
-        fill="#ffb3d4"
+        fill="#93c5fd"
         style={{
           transformBox: "fill-box" as const,
           transformOrigin: "center center",
@@ -148,7 +145,7 @@ function Leaf({
         y1="0"
         x2="0"
         y2={-h * 0.9}
-        stroke="rgba(80,160,110,0.4)"
+        stroke="rgba(56,189,248,0.4)"
         strokeWidth="1"
         style={{
           animation: `leafUnfurl 0.8s ease-out ${delay + 0.05}s both`,
@@ -162,14 +159,14 @@ function Leaf({
 
 /* ─── Baby's Breath positions ──────────────────────────────────────────────── */
 const BABIES: [number, number, number][] = [
-  // [cx, cy, radius]
   [118, 198, 3.2], [107, 228, 2.5], [96, 212, 2.2], [128, 168, 3],
   [152, 148, 2.8], [172, 132, 2], [200, 138, 3.5], [228, 132, 2],
   [248, 148, 2.8], [272, 168, 3], [292, 212, 2.2], [303, 228, 2.5],
   [282, 198, 3.2], [175, 168, 2], [225, 168, 2], [200, 152, 2.5],
 ];
 
-/* ─── Main Component ───────────────────────────────────────────────────────── */
+/* ─── Main Modal Component ─────────────────────────────────────────────────── */
+
 export default function FlowerModal({ isOpen, onClose }: Props) {
   const closeBtnRef = useRef<HTMLButtonElement>(null);
 
@@ -184,88 +181,39 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
 
   if (!isOpen) return null;
 
-  const LEFT_PHOTOS  = [
-    { src: "/img/G-ip79SbQAMdqZX.jpg", rotate: "-5deg",  delay: "3.0s" },
-    { src: "/img/G5XU67QbYAATumz.jpg", rotate: "-2deg",  delay: "3.4s" },
-    { src: "/img/kimmy JKT48 (2).jpg", rotate: "-4deg",  delay: "3.8s" },
-  ];
-  const RIGHT_PHOTOS = [
-    { src: "/img/HBSrsfvb0AEsOB-.jpg", rotate: "4deg",  delay: "3.2s" },
-    { src: "/img/HF82lq0aEAEcBAe.jpg", rotate: "6deg",  delay: "3.6s" },
-    { src: "/img/G5XU68SbMAEoFqg.jpg", rotate: "3deg",  delay: "4.0s" },
-  ];
-
-  const PhotoCard = ({ src, rotate, delay }: { src: string; rotate: string; delay: string }) => (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      style={{
-        width: "clamp(90px, 10vw, 148px)",
-        background: "#fff",
-        borderRadius: "3px",
-        padding: "5px 5px 24px",
-        boxShadow: "0 6px 28px rgba(0,0,0,0.55), 0 2px 8px rgba(244,63,94,0.2)",
-        transform: `rotate(${rotate})`,
-        animation: `photoReveal 0.5s cubic-bezier(0.34,1.56,0.64,1) ${delay} both`,
-        flexShrink: 0,
-        cursor: "default",
-      }}
-    >
-      <div style={{ position: "relative", width: "100%", aspectRatio: "3/4", overflow: "hidden", borderRadius: "1px" }}>
-        <Image src={src} alt="a memory" fill style={{ objectFit: "cover", objectPosition: "center top" }} sizes="148px" />
-      </div>
-      <p style={{ margin: "5px 0 0", textAlign: "center", fontSize: "0.48rem", letterSpacing: "0.1em", color: "#be123c", fontFamily: "monospace" }}>
-        ✦ with love
-      </p>
-    </div>
-  );
-
   return (
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="A bouquet of flowers, just for you"
+      aria-label="A birthday bouquet of flowers for Ratu Bunga Syakira"
       onClick={onClose}
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 999999,
-        background: "rgba(8,2,18,0.94)",
+        background: "rgba(5,12,30,0.94)",
         backdropFilter: "blur(28px)",
         WebkitBackdropFilter: "blur(28px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "clamp(12px, 2.5vw, 32px)",
         padding: "20px",
         animation: "backdropIn 0.38s ease",
         overflow: "hidden",
       }}
     >
-      {/* Left photo column */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(10px, 1.8vh, 20px)",
-          alignItems: "flex-end",
-          flexShrink: 0,
-        }}
-      >
-        {LEFT_PHOTOS.map((p, i) => <PhotoCard key={i} {...p} />)}
-      </div>
-
       {/* ── Centre Modal Card ── */}
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: "400px",
+          maxWidth: "440px",
           width: "100%",
           background:
-            "linear-gradient(170deg, #160430 0%, #0d0220 55%, #110328 100%)",
+            "linear-gradient(170deg, #0b1938 0%, #060e22 55%, #08142c 100%)",
           borderRadius: "24px",
-          border: "1px solid rgba(244,63,94,0.4)",
+          border: "1px solid rgba(59,130,246,0.45)",
           boxShadow:
-            "0 0 100px rgba(244,63,94,0.28), 0 0 40px rgba(180,20,80,0.2), 0 35px 70px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.06)",
+            "0 0 100px rgba(59,130,246,0.28), 0 0 40px rgba(37,99,235,0.2), 0 35px 70px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08)",
           animation: "modalIn 0.52s cubic-bezier(0.34, 1.56, 0.64, 1)",
           position: "relative",
           overflow: "hidden",
@@ -273,7 +221,6 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
         }}
       >
         {/* Corner sparkle glow */}
-
         <div
           style={{
             position: "absolute",
@@ -282,7 +229,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             width: "130px",
             height: "130px",
             background:
-              "radial-gradient(circle, rgba(244,63,94,0.35) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(59,130,246,0.35) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -294,7 +241,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             width: "110px",
             height: "110px",
             background:
-              "radial-gradient(circle, rgba(180,20,120,0.25) 0%, transparent 70%)",
+              "radial-gradient(circle, rgba(2,132,199,0.25) 0%, transparent 70%)",
             pointerEvents: "none",
           }}
         />
@@ -312,9 +259,9 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             width: "34px",
             height: "34px",
             borderRadius: "50%",
-            background: "rgba(244,63,94,0.12)",
-            border: "1px solid rgba(244,63,94,0.35)",
-            color: "rgba(254,205,211,0.85)",
+            background: "rgba(59,130,246,0.15)",
+            border: "1px solid rgba(59,130,246,0.4)",
+            color: "rgba(224,242,254,0.9)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -323,12 +270,12 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           }}
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLElement).style.background =
-              "rgba(244,63,94,0.28)";
+              "rgba(59,130,246,0.35)";
             (e.currentTarget as HTMLElement).style.transform = "scale(1.1)";
           }}
           onMouseLeave={(e) => {
             (e.currentTarget as HTMLElement).style.background =
-              "rgba(244,63,94,0.12)";
+              "rgba(59,130,246,0.15)";
             (e.currentTarget as HTMLElement).style.transform = "scale(1)";
           }}
         >
@@ -345,45 +292,45 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           aria-label="Animated blooming flower bouquet"
         >
           <defs>
-            {/* Rose — deep crimson */}
+            {/* Rose — Royal Sapphire Blue */}
             <radialGradient id="fm-deep" cx="32%" cy="28%" r="68%">
-              <stop offset="0%" stopColor="#ff8fa6" />
-              <stop offset="42%" stopColor="#c01845" />
-              <stop offset="100%" stopColor="#76001c" />
+              <stop offset="0%" stopColor="#93c5fd" />
+              <stop offset="42%" stopColor="#2563eb" />
+              <stop offset="100%" stopColor="#1e3a8a" />
             </radialGradient>
-            {/* Rose — blush pink */}
+            {/* Rose — Soft Powder Baby Blue */}
             <radialGradient id="fm-blush" cx="32%" cy="28%" r="68%">
-              <stop offset="0%" stopColor="#ffd6ea" />
-              <stop offset="44%" stopColor="#e0527c" />
-              <stop offset="100%" stopColor="#9e224c" />
+              <stop offset="0%" stopColor="#e0f2fe" />
+              <stop offset="44%" stopColor="#60a5fa" />
+              <stop offset="100%" stopColor="#1d4ed8" />
             </radialGradient>
-            {/* Rose inner — cream */}
+            {/* Rose inner — Icy Cloud */}
             <radialGradient id="fm-cream" cx="35%" cy="30%" r="68%">
-              <stop offset="0%" stopColor="#fff5f9" />
-              <stop offset="50%" stopColor="#ffc8d8" />
-              <stop offset="100%" stopColor="#e8829e" />
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="50%" stopColor="#dbeafe" />
+              <stop offset="100%" stopColor="#93c5fd" />
             </radialGradient>
-            {/* Tulip — magenta */}
+            {/* Tulip — Electric Sky Blue */}
             <radialGradient id="tulipGrad" cx="32%" cy="28%" r="68%">
-              <stop offset="0%" stopColor="#ffb3d9" />
-              <stop offset="40%" stopColor="#e91e8c" />
-              <stop offset="100%" stopColor="#880058" />
+              <stop offset="0%" stopColor="#bae6fd" />
+              <stop offset="40%" stopColor="#0284c7" />
+              <stop offset="100%" stopColor="#0369a1" />
             </radialGradient>
-            {/* Leaf */}
+            {/* Leaf — Sage / Teal */}
             <linearGradient id="leafGrad" x1="0%" y1="0%" x2="75%" y2="100%">
-              <stop offset="0%" stopColor="#56bf92" />
-              <stop offset="100%" stopColor="#1b4332" />
+              <stop offset="0%" stopColor="#38bdf8" />
+              <stop offset="100%" stopColor="#0f766e" />
             </linearGradient>
             {/* Ambient glow behind bouquet */}
             <radialGradient id="glowAmbient" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="rgba(244,63,94,0.45)" />
-              <stop offset="60%" stopColor="rgba(180,20,90,0.12)" />
-              <stop offset="100%" stopColor="rgba(244,63,94,0)" />
+              <stop offset="0%" stopColor="rgba(59,130,246,0.45)" />
+              <stop offset="60%" stopColor="rgba(37,99,235,0.12)" />
+              <stop offset="100%" stopColor="rgba(59,130,246,0)" />
             </radialGradient>
             {/* Soft drop-shadow filter on flowers */}
             <filter id="petalGlow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-              <feFlood floodColor="#f43f5e" floodOpacity="0.5" result="clr" />
+              <feFlood floodColor="#3b82f6" floodOpacity="0.5" result="clr" />
               <feComposite in="clr" in2="blur" operator="in" result="glow" />
               <feMerge>
                 <feMergeNode in="glow" />
@@ -414,7 +361,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* Center */}
           <path
             d="M 200 395 L 200 195"
-            stroke="#2d6a4f"
+            stroke="#0d9488"
             strokeWidth="4.5"
             fill="none"
             strokeLinecap="round"
@@ -427,7 +374,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* Left center */}
           <path
             d="M 196 395 Q 172 340 146 218"
-            stroke="#2d6a4f"
+            stroke="#0d9488"
             strokeWidth="3.8"
             fill="none"
             strokeLinecap="round"
@@ -440,7 +387,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* Right center */}
           <path
             d="M 204 395 Q 228 340 254 218"
-            stroke="#2d6a4f"
+            stroke="#0d9488"
             strokeWidth="3.8"
             fill="none"
             strokeLinecap="round"
@@ -453,7 +400,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* Far left */}
           <path
             d="M 188 395 Q 148 368 88 262"
-            stroke="#2d6a4f"
+            stroke="#0d9488"
             strokeWidth="3.2"
             fill="none"
             strokeLinecap="round"
@@ -466,7 +413,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* Far right */}
           <path
             d="M 212 395 Q 252 368 312 262"
-            stroke="#2d6a4f"
+            stroke="#0d9488"
             strokeWidth="3.2"
             fill="none"
             strokeLinecap="round"
@@ -491,7 +438,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             <Tulip cx={312} cy={258} delay={0.65} />
           </g>
 
-          {/* ─── SIDE ROSES (blush) ───────────────────────────────── */}
+          {/* ─── SIDE ROSES (Soft Powder Blue) ─────────────────────── */}
           <g filter="url(#petalGlow)">
             <Rose
               cx={146} cy={208}
@@ -511,7 +458,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             />
           </g>
 
-          {/* ─── CENTER ROSE (deep crimson) ──────────────────────── */}
+          {/* ─── CENTER ROSE (Royal Sapphire Blue) ─────────────────── */}
           <g filter="url(#petalGlow)">
             <Rose
               cx={200} cy={188}
@@ -532,7 +479,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
                 cx={bx}
                 cy={by}
                 r={br}
-                fill="rgba(255,242,250,0.96)"
+                fill="rgba(240,249,255,0.96)"
                 style={{
                   transformBox: "fill-box" as const,
                   transformOrigin: "center center",
@@ -545,7 +492,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           {/* ─── RIBBON at base ────────────────────────────────────── */}
           <path
             d="M 162 372 Q 200 363 238 372 Q 225 382 200 385 Q 175 382 162 372 Z"
-            fill="rgba(244,63,94,0.6)"
+            fill="rgba(59,130,246,0.65)"
             style={{
               animation: "leafUnfurl 0.6s ease-out 0.5s both",
               transformBox: "fill-box" as const,
@@ -554,7 +501,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           />
           <path
             d="M 165 372 Q 155 360 162 352 Q 170 365 200 362 Q 230 365 238 352 Q 245 360 235 372 Q 217 378 200 380 Q 183 378 165 372 Z"
-            fill="rgba(244,63,94,0.45)"
+            fill="rgba(37,99,235,0.45)"
             style={{
               animation: "leafUnfurl 0.6s ease-out 0.5s both",
               transformBox: "fill-box" as const,
@@ -577,7 +524,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
               width: "64px",
               height: "1px",
               background:
-                "linear-gradient(90deg, transparent, #f43f5e, transparent)",
+                "linear-gradient(90deg, transparent, #3b82f6, transparent)",
               margin: "0 auto 18px",
             }}
           />
@@ -587,38 +534,25 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
               fontSize: "clamp(1.15rem, 3.5vw, 1.55rem)",
               fontStyle: "italic",
               fontWeight: 300,
-              color: "rgba(254,205,211,0.97)",
+              color: "rgba(224,242,254,0.98)",
               lineHeight: 1.65,
               letterSpacing: "0.01em",
             }}
           >
-            "for you, with all my love"
+            &ldquo;Happy Birthday, Ratu Bunga Syakira&rdquo;
           </p>
           <p
             className="font-handwritten"
             style={{
               fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
-              color: "rgba(254,205,211,0.58)",
+              color: "rgba(186,230,253,0.75)",
               marginTop: "10px",
               lineHeight: 1.6,
             }}
           >
-            a little bouquet of happiness, just for you ♡
+            semoga harimu selalu dipenuhi cinta, tawa ceria, dan mimpi indah yang mekar sempurna ♡
           </p>
         </div>
-      </div>
-
-      {/* Right photo column */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "clamp(10px, 1.8vh, 20px)",
-          alignItems: "flex-start",
-          flexShrink: 0,
-        }}
-      >
-        {RIGHT_PHOTOS.map((p, i) => <PhotoCard key={i} {...p} />)}
       </div>
 
       {/* ── KEYFRAMES ────────────────────────────────────────────── */}
@@ -653,10 +587,6 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           0%   { transform: scale(0); opacity: 0; }
           52%  { transform: scale(1.5); opacity: 1; }
           100% { transform: scale(1); opacity: 0.92; }
-        }
-        @keyframes photoReveal {
-          0%   { opacity: 0; transform: translateY(60px) scale(0.8) rotate(var(--r, 0deg)); }
-          100% { opacity: 1; transform: translateY(0)   scale(1)   rotate(var(--r, 0deg)); }
         }
       `}</style>
     </div>

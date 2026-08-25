@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <>
-      <LoadingScreen />
+      <LoadingScreen onComplete={() => setLoadingComplete(true)} />
 
       {/* Fixed Ambient Floating Hearts & Sparkle Background */}
       <ParticleField count={40} />

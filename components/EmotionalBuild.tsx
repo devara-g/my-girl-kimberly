@@ -1,17 +1,52 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SparkleIcon } from "./Icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const WISH_PRESETS = [
+  "✨ Sehat & Bahagia Selalu",
+  "🌟 Makin Bersinar & Sukses",
+  "💫 Semua Mimpimu Tercapai",
+  "🌸 Senantiasa Membawa Kehangatan",
+  "💖 Stay Sweet & Inspiring",
+  "🎂 Happy Sweet Celebration!",
+];
+
 export default function EmotionalBuild() {
-  const sectionRef  = useRef<HTMLElement>(null);
-  const line1Ref    = useRef<HTMLParagraphElement>(null);
-  const line2Ref    = useRef<HTMLParagraphElement>(null);
-  const overlayRef  = useRef<HTMLDivElement>(null);
-  const imgRef      = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const line1Ref = useRef<HTMLParagraphElement>(null);
+  const line2Ref = useRef<HTMLParagraphElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+
+  const [activeWishes, setActiveWishes] = useState<Array<{ id: number; text: string; x: number; y: number }>>([]);
+  const [blown, setBlown] = useState(false);
+
+  const handleMakeWish = (e: React.MouseEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = e.clientY - rect.top;
+
+    setBlown(true);
+    const randomWish = WISH_PRESETS[Math.floor(Math.random() * WISH_PRESETS.length)];
+    const newWish = {
+      id: Date.now() + Math.random(),
+      text: randomWish,
+      x: clickX + (Math.random() - 0.5) * 60,
+      y: clickY - 20,
+    };
+
+    setActiveWishes((prev) => [...prev, newWish]);
+
+    setTimeout(() => {
+      setActiveWishes((prev) => prev.filter((w) => w.id !== newWish.id));
+    }, 2200);
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -45,7 +80,7 @@ export default function EmotionalBuild() {
       tl.fromTo(
         line1Ref.current,
         { opacity: 0, y: 32, filter: "blur(12px)" },
-        { opacity: 1, y: 0,  filter: "blur(0px)", duration: 0.25, ease: "power2.out" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" },
         "+=0.06"
       );
 
@@ -56,7 +91,16 @@ export default function EmotionalBuild() {
       tl.fromTo(
         line2Ref.current,
         { opacity: 0, y: 26, filter: "blur(10px)" },
-        { opacity: 1, y: 0,  filter: "blur(0px)", duration: 0.25, ease: "power2.out" }
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.25, ease: "power2.out" },
+        "+=0.04"
+      );
+
+      // Interactive Wish Box reveal
+      tl.fromTo(
+        buttonRef.current,
+        { opacity: 0, scale: 0.9, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.25, ease: "power2.out" },
+        "+=0.05"
       );
     }, sectionRef);
 
@@ -67,40 +111,44 @@ export default function EmotionalBuild() {
     <section
       ref={sectionRef}
       id="emotional-build"
-      style={{ height: "100vh", position: "relative", overflow: "hidden", background: "#fdf5f0" }}
+      style={{ height: "100vh", position: "relative", overflow: "hidden", background: "#edf4fc" }}
     >
-      {/* Background video */}
+      {/* Background video — landscape */}
       <div
         ref={imgRef}
-        style={{ position: "absolute", inset: "-5%", opacity: 0, zIndex: 0 }}
+        style={{ position: "absolute", inset: 0, opacity: 0, zIndex: 0, overflow: "hidden" }}
       >
         <video
-          src="/img/ssstwitter.com_1785580369335.mp4"
+          src="/img/ratu_snap.mp4"
           autoPlay
           loop
           muted
           playsInline
           style={{
-            width: "100%",
-            height: "100%",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            width: "100vh",
+            height: "100vw",
             objectFit: "cover",
-            objectPosition: "center center",
+            transform: "translate(-50%, -50%) rotate(-90deg)",
+            transformOrigin: "center center",
           }}
         />
       </div>
 
-      {/* Light soft rose overlay */}
+      {/* Light soft sky blue overlay */}
       <div
         ref={overlayRef}
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(180deg, rgba(255,252,248,0.78) 0%, rgba(253,245,240,0.65) 50%, rgba(250,236,233,0.85) 100%)",
+          background: "linear-gradient(180deg, rgba(244,248,253,0.78) 0%, rgba(237,244,252,0.65) 50%, rgba(219,234,254,0.85) 100%)",
           zIndex: 1,
         }}
       />
 
-      {/* Rose glow center */}
+      {/* Sky blue glow center */}
       <div
         className="light-leak"
         style={{
@@ -110,14 +158,14 @@ export default function EmotionalBuild() {
           width: "68%",
           height: "58%",
           background:
-            "radial-gradient(circle, rgba(244,63,94,0.15) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(59,130,246,0.16) 0%, transparent 70%)",
           zIndex: 2,
         }}
       />
 
       {/* Film edge tag */}
       <div style={{ position: "absolute", top: "24px", left: "50%", transform: "translateX(-50%)", zIndex: 10 }}>
-        <span className="film-edge">PAUSE · FOREVER &amp; ALWAYS</span>
+        <span className="film-edge">A WISH UPON THE STARS · 25.08.2010</span>
       </div>
 
       {/* Text block */}
@@ -132,7 +180,7 @@ export default function EmotionalBuild() {
           justifyContent: "center",
           textAlign: "center",
           padding: "0 clamp(1.5rem, 6vw, 5rem)",
-          gap: "clamp(1.2rem, 2.8vw, 2rem)",
+          gap: "clamp(1.2rem, 2.5vw, 1.8rem)",
         }}
       >
         <p
@@ -142,13 +190,13 @@ export default function EmotionalBuild() {
             fontSize: "clamp(1.6rem, 4.8vw, 3.4rem)",
             fontStyle: "italic",
             fontWeight: 300,
-            color: "#2b141e",
+            color: "#0f1d36",
             lineHeight: 1.5,
             textShadow: "0 2px 25px rgba(255,255,255,0.95)",
             opacity: 0,
           }}
         >
-          &ldquo;If I could relive one memory over and over...&rdquo;
+          &ldquo;Di setiap langkah perjalanan dan usiamu yang baru...&rdquo;
         </p>
 
         <p
@@ -158,15 +206,78 @@ export default function EmotionalBuild() {
             fontSize: "clamp(1.6rem, 4.8vw, 3.4rem)",
             fontStyle: "italic",
             fontWeight: 300,
-            color: "#be123c",
+            color: "#2563eb",
             lineHeight: 1.5,
-            textShadow: "0 2px 25px rgba(255,255,255,0.95), 0 0 20px rgba(244,63,94,0.25)",
+            textShadow: "0 2px 25px rgba(255,255,255,0.95), 0 0 20px rgba(59,130,246,0.25)",
             opacity: 0,
           }}
         >
-          &ldquo;...I&rsquo;d probably choose every moment with you.&rdquo;
+          &ldquo;...semoga semesta selalu memelukmu dengan hangat dan bahagia.&rdquo;
         </p>
+
+        {/* Interactive Make a Wish Button */}
+        <div ref={buttonRef} style={{ opacity: 0, marginTop: "0.8rem", position: "relative" }}>
+          <button
+            onClick={handleMakeWish}
+            className="glass-panel"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              padding: "10px 24px",
+              borderRadius: "30px",
+              border: "1px solid rgba(59,130,246,0.35)",
+              color: "#0f1d36",
+              cursor: "pointer",
+              fontSize: "0.88rem",
+              fontWeight: 500,
+              letterSpacing: "0.04em",
+              boxShadow: "0 8px 25px rgba(37,99,235,0.15)",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1.05)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
+          >
+            <SparkleIcon size={16} color="#2563eb" />
+            {blown ? "✨ Wish Sent! (Kirim Doa Lagi)" : "🎂 Kirim Doa & Make a Wish"}
+          </button>
+
+          {/* Floating wish badges */}
+          {activeWishes.map((w) => (
+            <div
+              key={w.id}
+              className="glass-panel"
+              style={{
+                position: "absolute",
+                left: w.x,
+                top: w.y,
+                pointerEvents: "none",
+                padding: "6px 14px",
+                borderRadius: "20px",
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                color: "#2563eb",
+                whiteSpace: "nowrap",
+                border: "1px solid rgba(59,130,246,0.4)",
+                boxShadow: "0 8px 20px rgba(59,130,246,0.3)",
+                animation: "wishFloat 2.2s ease-out forwards",
+                zIndex: 20,
+              }}
+            >
+              {w.text}
+            </div>
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        @keyframes wishFloat {
+          0%   { opacity: 0; transform: translate(-50%, 0) scale(0.8); }
+          15%  { opacity: 1; transform: translate(-50%, -20px) scale(1.05); }
+          80%  { opacity: 0.9; transform: translate(-50%, -80px) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -120px) scale(0.9); }
+        }
+      `}</style>
     </section>
   );
 }

@@ -14,10 +14,10 @@ interface Particle {
 }
 
 const COLORS = [
-  "rgba(212,133,74,",
-  "rgba(245,237,224,",
-  "rgba(200,120,80,",
-  "rgba(232,196,176,",
+  "rgba(96,165,250,",
+  "rgba(186,230,253,",
+  "rgba(59,130,246,",
+  "rgba(224,242,254,",
 ];
 
 export default function ParticleField({ count = 55 }: { count?: number }) {

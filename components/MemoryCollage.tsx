@@ -8,35 +8,25 @@ import { HeartSmallIcon } from "./Icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 9 Single Photos (no split collage images!)
+// 6 Curated High-Aesthetic Photos for Ratu Bunga Syakira
 const COLLAGE_ITEMS = [
   // Column 1
   {
     src: "/img/G-ip79SbQAMdqZX.jpg",
-    alt: "Beautiful portrait",
-    note: "where our love story grew sweeter",
-    date: "'23 10 14",
-    rotate: "-3.5deg",
+    alt: "Senyum manis mempesona",
+    note: "senyum manis yang tak pernah pudar",
+    date: "'10 08 25",
+    rotate: "-3deg",
     aspectRatio: "3/4",
-    objectPosition: "center 25%",
-    column: 1,
-  },
-  {
-    src: "/img/G5XU67QbYAATumz.jpg",
-    alt: "Warm laughter",
-    note: "your smile lights up my world",
-    date: "'23 10 24",
-    rotate: "2.8deg",
-    aspectRatio: "3/4",
-    objectPosition: "center 25%",
+    objectPosition: "center 20%",
     column: 1,
   },
   {
     src: "/img/HOED8g2aAAAIjFx.jpg",
-    alt: "Golden sunset",
-    note: "romantic golden hour together",
-    date: "'23 11 22",
-    rotate: "-2deg",
+    alt: "Penuh kehangatan",
+    note: "pancaran hangat di setiap tatapan",
+    date: "'24 08 25",
+    rotate: "2.2deg",
     aspectRatio: "4/3",
     objectPosition: "center center",
     column: 1,
@@ -44,63 +34,43 @@ const COLLAGE_ITEMS = [
 
   // Column 2 (Staggered down for organic scrapbook feel)
   {
-    src: "/img/G-ip79ZbMAEAZic.jpg",
-    alt: "Intimate portrait",
-    note: "holding memories close to heart",
-    date: "'23 10 18",
-    rotate: "3.2deg",
+    src: "/img/G5XU67QbYAATumz.jpg",
+    alt: "Tawa ceria",
+    note: "tawa riang pembawa kebahagiaan",
+    date: "'25 08 25",
+    rotate: "2.8deg",
     aspectRatio: "3/4",
     objectPosition: "center 25%",
     column: 2,
   },
   {
-    src: "/img/G5XU68SbMAEoFqg.jpg",
-    alt: "Soft glance",
-    note: "the sweetest gaze I'll ever know",
-    date: "'23 11 08",
-    rotate: "-3deg",
+    src: "/img/kimmy JKT48 (2).jpg",
+    alt: "Sosok anggun",
+    note: "anggun dan penuh pesona",
+    date: "'26 08 25",
+    rotate: "-2.5deg",
     aspectRatio: "3/4",
-    objectPosition: "center 25%",
-    column: 2,
-  },
-  {
-    src: "/img/HOKmDzHa0AAi9kk.jpg",
-    alt: "Square snapshot",
-    note: "little moments of pure joy",
-    date: "'23 11 28",
-    rotate: "2.5deg",
-    aspectRatio: "1/1",
-    objectPosition: "center center",
+    objectPosition: "center top",
     column: 2,
   },
 
   // Column 3
   {
     src: "/img/HBSrsfvb0AEsOB-.jpg",
-    alt: "Beautiful memory",
-    note: "forever embedded in my heart",
-    date: "'23 11 15",
+    alt: "Merajut mimpi",
+    note: "setiap mimpi indah yang kau rajut",
+    date: "'25 08 25",
     rotate: "-2.8deg",
     aspectRatio: "3/4",
     objectPosition: "center 25%",
     column: 3,
   },
   {
-    src: "/img/G3Oeuw8WUAAxCS4.jpg",
-    alt: "Quiet stroll",
-    note: "every quiet moment with you",
-    date: "'23 11 01",
-    rotate: "3.5deg",
-    aspectRatio: "4/3",
-    objectPosition: "center center",
-    column: 3,
-  },
-  {
     src: "/img/HF82lq0aEAEcBAe.jpg",
-    alt: "Cozy vibes",
-    note: "cozy evenings & warm hugs",
-    date: "'23 12 05",
-    rotate: "-1.8deg",
+    alt: "Terus bersinar",
+    note: "tetaplah bersinar, Ratu Bunga Syakira",
+    date: "'26 08 25",
+    rotate: "3deg",
     aspectRatio: "3/4",
     objectPosition: "center 25%",
     column: 3,
@@ -191,8 +161,8 @@ export default function MemoryCollage() {
 
   const columns = [
     { items: col1, offset: "0px" },
-    { items: col2, offset: "48px" }, // Staggered down for organic feel
-    { items: col3, offset: "16px" },
+    { items: col2, offset: "36px" }, // Staggered down for organic feel
+    { items: col3, offset: "12px" },
   ];
 
   return (
@@ -201,7 +171,7 @@ export default function MemoryCollage() {
       id="collage"
       style={{
         background:
-          "linear-gradient(180deg, #f8e8e3 0%, #faf0ea 60%, #fffcf8 100%)",
+          "linear-gradient(180deg, #e2eef9 0%, #ebf4fc 60%, #f4f8fd 100%)",
         padding: "clamp(5rem, 12vh, 10rem) clamp(1.2rem, 5vw, 4rem)",
         position: "relative",
         overflow: "hidden",
@@ -217,7 +187,7 @@ export default function MemoryCollage() {
           width: "85%",
           height: "75%",
           background:
-            "radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 65%)",
+            "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%)",
           filter: "blur(100px)",
           zIndex: 0,
         }}
@@ -241,10 +211,10 @@ export default function MemoryCollage() {
             fontWeight: 500,
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "#be123c",
+            color: "#2563eb",
           }}
         >
-          A Scrapbook of Our Love
+          GALLERY OF BEAUTIFUL MOMENTS
         </span>
         <div className="chapter-line" />
         <h2
@@ -253,13 +223,13 @@ export default function MemoryCollage() {
             fontSize: "clamp(1.6rem, 4.5vw, 3rem)",
             fontWeight: 300,
             fontStyle: "italic",
-            color: "#2b141e",
+            color: "#0f1d36",
           }}
         >
-          Every frame a favorite memory.
+          Treasured Moments of Syakira
         </h2>
-        <p className="font-handwritten" style={{ fontSize: "1.25rem", color: "#be123c", marginTop: "4px" }}>
-          (click any photo to open our album)
+        <p className="font-handwritten" style={{ fontSize: "1.25rem", color: "#2563eb", marginTop: "4px" }}>
+          (klik foto untuk melihat ucapan manis)
         </p>
       </div>
 
@@ -304,9 +274,9 @@ export default function MemoryCollage() {
                     background: "#ffffff",
                     padding: "12px 12px 16px 12px",
                     borderRadius: "4px",
-                    border: "1px solid rgba(244,63,94,0.12)",
+                    border: "1px solid rgba(59,130,246,0.15)",
                     boxShadow:
-                      "0 14px 32px -6px rgba(180,80,100,0.14), 0 4px 12px rgba(0,0,0,0.04)",
+                      "0 14px 32px -6px rgba(37,99,235,0.12), 0 4px 12px rgba(15,29,54,0.04)",
                     transition:
                       "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease",
                   }}
@@ -322,7 +292,7 @@ export default function MemoryCollage() {
                       aspectRatio: item.aspectRatio,
                       borderRadius: "2px",
                       overflow: "hidden",
-                      background: "#faf0ea",
+                      background: "#e8f2fa",
                     }}
                   >
                     <Image
@@ -352,14 +322,14 @@ export default function MemoryCollage() {
                       className="font-handwritten"
                       style={{
                         fontSize: "1.25rem",
-                        color: "#2b141e",
+                        color: "#0f1d36",
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "5px",
                         fontWeight: 500,
                       }}
                     >
-                      <HeartSmallIcon size={12} color="#be123c" />
+                      <HeartSmallIcon size={12} color="#2563eb" />
                       {item.note}
                     </span>
                   </div>
@@ -378,7 +348,7 @@ export default function MemoryCollage() {
             position: "fixed",
             inset: 0,
             zIndex: 99999,
-            background: "rgba(253,245,240,0.92)",
+            background: "rgba(235,244,252,0.92)",
             backdropFilter: "blur(20px)",
             WebkitBackdropFilter: "blur(20px)",
             display: "flex",
@@ -398,7 +368,7 @@ export default function MemoryCollage() {
               background: "#ffffff",
               padding: "16px 16px 20px 16px",
               borderRadius: "4px",
-              boxShadow: "0 25px 60px rgba(180,60,90,0.25)",
+              boxShadow: "0 25px 60px rgba(37,99,235,0.2)",
             }}
           >
             <div className="polaroid-tape" />
@@ -423,7 +393,7 @@ export default function MemoryCollage() {
               </span>
             </div>
             <div style={{ paddingTop: "16px", textAlign: "center" }}>
-              <p className="font-handwritten" style={{ fontSize: "1.65rem", color: "#2b141e", fontWeight: 500 }}>
+              <p className="font-handwritten" style={{ fontSize: "1.65rem", color: "#0f1d36", fontWeight: 500 }}>
                 &ldquo;{activePhoto.note}&rdquo;
               </p>
               <button
@@ -433,7 +403,7 @@ export default function MemoryCollage() {
                   fontSize: "0.7rem",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  color: "#f43f5e",
+                  color: "#2563eb",
                   background: "none",
                   border: "none",
                   cursor: "pointer",

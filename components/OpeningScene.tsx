@@ -112,26 +112,26 @@ export default function OpeningScene() {
         height: "100vh",
         position: "relative",
         overflow: "hidden",
-        background: "#fffcf8",
+        background: "#f4f8fd",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      {/* Warm gradient background */}
+      {/* Warm sky gradient background */}
       <div
         ref={bgRef}
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse at 50% 40%, #fce7eb 0%, #fdf5f0 40%, #fffcf8 100%)",
+            "radial-gradient(ellipse at 50% 40%, #dbeafe 0%, #edf4fc 40%, #f4f8fd 100%)",
           opacity: 0,
           zIndex: 0,
         }}
       />
 
-      {/* Ambient Rose Light Leaks */}
+      {/* Ambient Sky Blue Light Leaks */}
       <div
         className="light-leak"
         style={{
@@ -139,7 +139,7 @@ export default function OpeningScene() {
           left: "10%",
           width: "65%",
           height: "70%",
-          background: "radial-gradient(circle, rgba(244,63,94,0.13) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(59,130,246,0.14) 0%, transparent 70%)",
           zIndex: 1,
         }}
       />
@@ -150,7 +150,7 @@ export default function OpeningScene() {
           right: "5%",
           width: "55%",
           height: "60%",
-          background: "radial-gradient(circle, rgba(225,29,72,0.09) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(37,99,235,0.10) 0%, transparent 70%)",
           zIndex: 1,
         }}
       />
@@ -177,12 +177,12 @@ export default function OpeningScene() {
             width: "7px",
             height: "7px",
             borderRadius: "50%",
-            background: "#f43f5e",
-            boxShadow: "0 0 8px rgba(244,63,94,0.8)",
+            background: "#0284c7",
+            boxShadow: "0 0 8px rgba(2,132,199,0.8)",
             animation: "recDot 1.8s ease-in-out infinite",
           }}
         />
-        <span className="led-date">OCT 14, 2023 · 06:42 PM</span>
+        <span className="led-date">AUG 25, 2010 · A STAR WAS BORN</span>
       </div>
 
       {/* Decorative petal ornaments */}
@@ -197,7 +197,7 @@ export default function OpeningScene() {
           opacity: 0,
           fontSize: "clamp(3rem, 7vw, 6rem)",
           lineHeight: 1,
-          color: "rgba(244,63,94,0.22)",
+          color: "rgba(59,130,246,0.22)",
           userSelect: "none",
           fontFamily: "serif",
         }}
@@ -215,7 +215,7 @@ export default function OpeningScene() {
           opacity: 0,
           fontSize: "clamp(3rem, 7vw, 6rem)",
           lineHeight: 1,
-          color: "rgba(244,63,94,0.22)",
+          color: "rgba(59,130,246,0.22)",
           userSelect: "none",
           fontFamily: "serif",
         }}
@@ -243,11 +243,11 @@ export default function OpeningScene() {
           style={{
             fontSize: "0.65rem",
             letterSpacing: "0.32em",
-            color: "#be123c",
+            color: "#2563eb",
             marginBottom: "1.6rem",
           }}
         >
-          FOR YOU — A LOVE STORY
+          A SPECIAL TRIBUTE · RATU BUNGA SYAKIRA
         </span>
 
         {/* Main lyric — display serif italic */}
@@ -258,15 +258,15 @@ export default function OpeningScene() {
             fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
             fontWeight: 300,
             fontStyle: "italic",
-            color: "#2b141e",
+            color: "#0f1d36",
             lineHeight: 1.18,
             letterSpacing: "-0.015em",
             opacity: 0,
             marginBottom: "0.6rem",
-            textShadow: "0 4px 30px rgba(244,63,94,0.1)",
+            textShadow: "0 4px 30px rgba(59,130,246,0.12)",
           }}
         >
-          &ldquo;They will be in love with you...
+          &ldquo;A flower blooming under the August sky...
         </h1>
         <p
           ref={line2Ref}
@@ -275,18 +275,18 @@ export default function OpeningScene() {
             fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
             fontWeight: 300,
             fontStyle: "italic",
-            color: "#be123c",
+            color: "#2563eb",
             lineHeight: 1.18,
             letterSpacing: "-0.015em",
             opacity: 0,
             marginBottom: "2.8rem",
-            textShadow: "0 4px 30px rgba(244,63,94,0.18)",
+            textShadow: "0 4px 30px rgba(37,99,235,0.18)",
           }}
         >
-          and you will be in love with them.&rdquo;
+          Ratu Bunga Syakira, born to shine bright.&rdquo;
         </p>
 
-        {/* Decorative divider line with rose dot */}
+        {/* Decorative divider line with sky blue dot */}
         <div
           ref={dividerRef}
           style={{
@@ -298,9 +298,9 @@ export default function OpeningScene() {
             opacity: 0,
           }}
         >
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(244,63,94,0.4))" }} />
-          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f43f5e", boxShadow: "0 0 8px rgba(244,63,94,0.6)" }} />
-          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(244,63,94,0.4), transparent)" }} />
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, transparent, rgba(59,130,246,0.4))" }} />
+          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#3b82f6", boxShadow: "0 0 8px rgba(59,130,246,0.6)" }} />
+          <div style={{ flex: 1, height: "1px", background: "linear-gradient(90deg, rgba(59,130,246,0.4), transparent)" }} />
         </div>
 
         {/* Handwritten sub line */}
@@ -309,26 +309,26 @@ export default function OpeningScene() {
           className="font-handwritten"
           style={{
             fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)",
-            color: "#be123c",
+            color: "#2563eb",
             opacity: 0,
             lineHeight: 1.5,
             marginBottom: "0.4rem",
           }}
         >
-          &ldquo;look at you, you&rsquo;re so pretty...&rdquo;
+          &ldquo;semoga harimu seindah senyum manismu...&rdquo;
         </p>
         <p
           ref={line4Ref}
           className="font-handwritten"
           style={{
             fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)",
-            color: "#9e3b56",
+            color: "#334e68",
             opacity: 0,
             lineHeight: 1.6,
             marginBottom: "2.4rem",
           }}
         >
-          — Girl in Red
+          — 25 Agustus 2010
         </p>
 
         {/* Date stamp */}
@@ -338,10 +338,10 @@ export default function OpeningScene() {
             style={{
               fontSize: "0.78rem",
               letterSpacing: "0.2em",
-              color: "#be123c",
+              color: "#0284c7",
             }}
           >
-            October 2023
+            25.08.2010 · SWEET CELEBRATION
           </span>
         </div>
       </div>
@@ -366,16 +366,16 @@ export default function OpeningScene() {
             fontSize: "0.65rem",
             letterSpacing: "0.25em",
             textTransform: "uppercase",
-            color: "#9e3b56",
+            color: "#334e68",
           }}
         >
-          Scroll to unfold our story
+          Scroll to celebrate her journey
         </span>
         <div
           style={{
             width: "1px",
             height: "36px",
-            background: "linear-gradient(180deg, #f43f5e 0%, transparent 100%)",
+            background: "linear-gradient(180deg, #3b82f6 0%, transparent 100%)",
             animation: "scrollPulse 2s ease-in-out infinite",
           }}
         />

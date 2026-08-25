@@ -18,12 +18,13 @@ interface HeartParticle {
 }
 
 const HEART_COLORS = [
-  "rgba(251, 113, 133, ", // Pink Rose
-  "rgba(244, 63, 94, ",   // Bright Love Red
-  "rgba(225, 29, 72, ",   // Deep Velvet Crimson
-  "rgba(244, 114, 182, ",  // Sweet Blush Pink
-  "rgba(253, 164, 175, ",  // Light Rose Cream
-  "rgba(251, 191, 36, ",   // Warm Golden Sparkle
+  "rgba(96, 165, 250, ",  // Soft Sky Blue
+  "rgba(59, 130, 246, ",  // Vibrant Royal Blue
+  "rgba(37, 99, 235, ",   // Deep Electric Blue
+  "rgba(147, 197, 253, ", // Light Baby Blue
+  "rgba(186, 230, 253, ", // Pale Ice Blue
+  "rgba(56, 189, 248, ",  // Cyan Blue Sparkle
+  "rgba(251, 191, 36, ",  // Warm Golden Sparkle
 ];
 
 export default function FloatingHearts() {

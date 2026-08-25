@@ -34,7 +34,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
         position: "fixed",
         inset: 0,
         zIndex: 99999,
-        background: "#fffcf8",
+        background: "#f4f8fd",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -49,7 +49,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
-            border: "1.5px solid rgba(244,63,94,0.2)",
+            border: "1.5px solid rgba(59,130,246,0.25)",
             animation: "ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite",
           }}
         />
@@ -58,7 +58,7 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             position: "absolute",
             inset: "8px",
             borderRadius: "50%",
-            border: "1.5px solid rgba(244,63,94,0.4)",
+            border: "1.5px solid rgba(59,130,246,0.45)",
             animation: "ping 2.2s cubic-bezier(0, 0, 0.2, 1) 0.4s infinite",
           }}
         />
@@ -67,8 +67,8 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             position: "absolute",
             inset: "16px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, #f43f5e 0%, #be123c 100%)",
-            boxShadow: "0 0 25px rgba(244,63,94,0.4)",
+            background: "radial-gradient(circle, #3b82f6 0%, #1d4ed8 100%)",
+            boxShadow: "0 0 25px rgba(59,130,246,0.4)",
           }}
         />
       </div>
@@ -80,20 +80,20 @@ export default function LoadingScreen({ onComplete }: LoadingScreenProps) {
             fontSize: "1.4rem",
             fontStyle: "italic",
             letterSpacing: "0.08em",
-            color: "#2b141e",
+            color: "#0f1d36",
           }}
         >
-          Unfolding Memories...
+          Unfolding a Special Celebration...
         </span>
         <span
           style={{
             fontSize: "0.65rem",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "#be123c",
+            color: "#2563eb",
           }}
         >
-          WE FELL IN LOVE IN OCTOBER
+          FOR RATU BUNGA SYAKIRA · 25.08.2010
         </span>
       </div>
 

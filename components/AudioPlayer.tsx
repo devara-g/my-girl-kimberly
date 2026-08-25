@@ -9,28 +9,20 @@ interface AudioPlayerProps {
 
 export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(25);
-  const [isBlocked, setIsBlocked] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const START_TIME = 25; // 00:25
-  const END_TIME = 90;   // 01:30
-
-  // Play audio starting from START_TIME
+  // Play audio safely
   const playAudio = async () => {
     const audio = audioRef.current;
     if (!audio) return;
 
     try {
-      if (audio.currentTime < START_TIME || audio.currentTime >= END_TIME) {
-        audio.currentTime = START_TIME;
-      }
       await audio.play();
       setIsPlaying(true);
-      setIsBlocked(false);
     } catch {
-      // Autoplay blocked by browser policy
-      setIsBlocked(true);
+      // Browser blocked completely unprompted sound, will auto-resume on first gesture/scroll
       setIsPlaying(false);
     }
   };
@@ -51,30 +43,35 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
     }
   };
 
-  // Initialize HTMLAudioElement
+  // Initialize HTMLAudioElement & Auto-play immediately
   useEffect(() => {
-    const audio = new Audio("/song.mp3");
+    const audio = new Audio("/transform.mp3");
     audio.preload = "auto";
-    audio.currentTime = START_TIME;
+    audio.loop = true;
     audioRef.current = audio;
+
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration || 0);
+    };
 
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
-      // Loop between 00:25 and 01:00
-      if (audio.currentTime >= END_TIME) {
-        audio.currentTime = START_TIME;
-      }
     };
 
     const handleEnded = () => {
-      audio.currentTime = START_TIME;
+      audio.currentTime = 0;
       audio.play().catch(() => {});
     };
 
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("ended", handleEnded);
 
+    // Attempt instant autoplay immediately on page load
+    playAudio();
+
     return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("ended", handleEnded);
       audio.pause();
@@ -88,27 +85,32 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
     }
   }, [autoPlayTrigger]);
 
-  // Fallback: Listen for first click/scroll if browser blocked initial autoplay
+  // Comprehensive instant fallback: Auto-play on first scroll, mouse movement, touch, or any user gesture
   useEffect(() => {
-    const handleUserInteraction = () => {
-      if (!isPlaying && audioRef.current) {
-        playAudio();
+    const triggerInstantPlay = () => {
+      if (audioRef.current && audioRef.current.paused) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {});
       }
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("touchstart", handleUserInteraction);
+      cleanupListeners();
     };
 
-    window.addEventListener("click", handleUserInteraction, { once: true });
-    window.addEventListener("touchstart", handleUserInteraction, { once: true });
+    const events = ["scroll", "wheel", "touchstart", "touchmove", "mousemove", "pointerdown", "keydown", "click"];
+    const cleanupListeners = () => {
+      events.forEach((ev) => window.removeEventListener(ev, triggerInstantPlay));
+    };
+
+    events.forEach((ev) => window.addEventListener(ev, triggerInstantPlay, { passive: true }));
 
     return () => {
-      window.removeEventListener("click", handleUserInteraction);
-      window.removeEventListener("touchstart", handleUserInteraction);
+      cleanupListeners();
     };
-  }, [isPlaying]);
+  }, []);
 
   // Format seconds to mm:ss
   const formatTime = (sec: number) => {
+    if (isNaN(sec) || sec < 0) return "00:00";
     const m = Math.floor(sec / 60);
     const s = Math.floor(sec % 60);
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
@@ -127,25 +129,6 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
         gap: "8px",
       }}
     >
-      {/* Autoplay hint if browser blocked audio initially */}
-      {isBlocked && !isPlaying && (
-        <div
-          className="glass-panel"
-          style={{
-            padding: "6px 14px",
-            borderRadius: "20px",
-            fontSize: "0.75rem",
-            color: "#be123c",
-            fontWeight: 500,
-            letterSpacing: "0.05em",
-            animation: "bounce 2s infinite",
-          }}
-        >
-          <MusicNoteIcon size={13} color="#be123c" style={{ marginRight: "5px", verticalAlign: "middle" }} />
-          Tap anywhere to enable soundtrack
-        </div>
-      )}
-
       <button
         onClick={togglePlay}
         className="glass-panel"
@@ -157,26 +140,26 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
           borderRadius: "30px",
           cursor: "pointer",
           border: isPlaying
-            ? "1px solid rgba(244,63,94,0.4)"
-            : "1px solid rgba(244,63,94,0.18)",
-          color: "#2b141e",
+            ? "1px solid rgba(59,130,246,0.45)"
+            : "1px solid rgba(59,130,246,0.2)",
+          color: "#0f1d36",
           transition: "transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
-          boxShadow: isPlaying ? "0 8px 25px rgba(244,63,94,0.25)" : "0 8px 24px rgba(180,60,90,0.12)",
+          boxShadow: isPlaying ? "0 8px 25px rgba(59,130,246,0.25)" : "0 8px 24px rgba(37,99,235,0.12)",
         }}
         aria-label="Toggle song playback"
       >
         {/* Spinning Vinyl Record Icon */}
         <div
           style={{
-            width: "30px",
-            height: "30px",
+            width: "32px",
+            height: "32px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, #2b141e 30%, #5c2e40 70%, #f43f5e 100%)",
-            border: "1px solid rgba(244,63,94,0.3)",
+            background: "radial-gradient(circle, #0f1d36 30%, #1e3a8a 70%, #3b82f6 100%)",
+            border: "1px solid rgba(59,130,246,0.4)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: isPlaying ? "0 0 12px rgba(244,63,94,0.5)" : "none",
+            boxShadow: isPlaying ? "0 0 12px rgba(59,130,246,0.5)" : "none",
             flexShrink: 0,
           }}
           className={isPlaying ? "vinyl-spinning" : ""}
@@ -196,15 +179,15 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
             style={{
               fontSize: "0.6rem",
               letterSpacing: "0.15em",
-              color: "#be123c",
+              color: "#2563eb",
               textTransform: "uppercase",
               fontWeight: 500,
             }}
           >
-            {isPlaying ? `Girl in Red · ${formatTime(currentTime)} / 01:30` : "Play Song (0:25 - 1:30)"}
+            {isPlaying ? `Daniel Caesar · ${formatTime(currentTime)} / ${formatTime(duration || 280)}` : "Daniel Caesar · Transform"}
           </span>
-          <span className="font-handwritten" style={{ fontSize: "1.15rem", color: "#2b141e", lineHeight: 1, fontWeight: 500 }}>
-            We Fell in Love in October
+          <span className="font-handwritten" style={{ fontSize: "1.15rem", color: "#0f1d36", lineHeight: 1, fontWeight: 500 }}>
+            Transform (feat. Charlotte Day Wilson)
           </span>
         </div>
 
@@ -216,7 +199,7 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
                 key={i}
                 style={{
                   width: "2px",
-                  background: "#f43f5e",
+                  background: "#3b82f6",
                   borderRadius: "1px",
                   animation: `soundWave 1.2s ease-in-out ${i * 0.2}s infinite alternate`,
                 }}
@@ -230,10 +213,6 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
         @keyframes soundWave {
           0% { height: 4px; }
           100% { height: 14px; }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-4px); }
         }
       `}</style>
     </div>
