@@ -23,16 +23,16 @@ const TRACKS: TrackInfo[] = [
     artist: "Bazzi feat. Camila Cabello",
     title: "Beautiful",
     startTime: 18,
-    endTime: 99, // 1 minute 39 seconds
-    loop: false,
+    endTime: 0, // Loops smoothly during browsing
+    loop: true,
   },
   {
     id: "daniel",
     src: "/transform.mp3",
     artist: "Daniel Caesar",
     title: "Transform (feat. Charlotte Day Wilson)",
-    startTime: 0,
-    endTime: 0, // full song
+    startTime: 183, // 3:03 climax section to the end
+    endTime: 0, // Plays till end of song
     loop: true,
   },
 ];
@@ -41,7 +41,7 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(18);
-  const [duration, setDuration] = useState(99);
+  const [duration, setDuration] = useState(180);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentTrackIndexRef = useRef(0);
@@ -82,18 +82,12 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
 
     audio.addEventListener("timeupdate", () => {
       setCurrentTime(audio.currentTime);
-
-      // Check if Bazzi has reached 1:39 (99s)
-      if (track.endTime > 0 && audio.currentTime >= track.endTime) {
-        if (index + 1 < TRACKS.length) {
-          loadAndPlayTrack(index + 1, true);
-        }
-      }
     });
 
     audio.addEventListener("ended", () => {
-      if (index + 1 < TRACKS.length) {
-        loadAndPlayTrack(index + 1, true);
+      if (track.loop) {
+        audio.currentTime = track.startTime;
+        audio.play().catch(() => {});
       }
     });
 
@@ -149,11 +143,19 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
     }
   };
 
-  // Initial setup: start on first track (Bazzi at 0:30)
+  // Initial setup: start on first track (Bazzi at 0:18)
   useEffect(() => {
     loadAndPlayTrack(0, true);
 
+    // Listen for the special flower bouquet trigger
+    const handleFlowerOpen = () => {
+      loadAndPlayTrack(1, true); // Index 1 is Daniel Caesar - Transform
+    };
+
+    window.addEventListener("openBouquetMusic", handleFlowerOpen);
+
     return () => {
+      window.removeEventListener("openBouquetMusic", handleFlowerOpen);
       if (audioRef.current) {
         audioRef.current.pause();
       }

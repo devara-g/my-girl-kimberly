@@ -8,12 +8,13 @@ import { HeartSmallIcon } from "./Icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 3 Curated High-Aesthetic Photos for Ratu Bunga Syakira
+// 3 Curated Moments for Ratu Bunga Syakira
 const COLLAGE_ITEMS = [
   {
-    src: "/img/G-ip79SbQAMdqZX.jpg",
-    alt: "Senyum manis mempesona",
-    note: "senyum manis yang tak pernah pudar",
+    src: "/img/collage_video1.mp4",
+    type: "video" as const,
+    alt: "Pancaran pesona manis Syakira",
+    note: "pesona indah yang selalu memikat hati...",
     date: "'10 08 25",
     rotate: "-3deg",
     aspectRatio: "3/4",
@@ -21,9 +22,10 @@ const COLLAGE_ITEMS = [
     column: 1,
   },
   {
-    src: "/img/G5XU67QbYAATumz.jpg",
-    alt: "Tawa ceria",
-    note: "tawa riang pembawa kebahagiaan",
+    src: "/img/collage_video2.mp4",
+    type: "video" as const,
+    alt: "Senyum hangat dan tawa ceria Syakira",
+    note: "senyuman manis pembawa kehangatan dunia",
     date: "'25 08 25",
     rotate: "2.8deg",
     aspectRatio: "3/4",
@@ -31,9 +33,10 @@ const COLLAGE_ITEMS = [
     column: 2,
   },
   {
-    src: "/img/HBSrsfvb0AEsOB-.jpg",
-    alt: "Merajut mimpi",
-    note: "setiap mimpi indah yang kau rajut",
+    src: "/img/collage_video3.mp4",
+    type: "video" as const,
+    alt: "Setiap langkah anggun dan penuh mimpi",
+    note: "setiap langkah anggun menggapai mimpi indah",
     date: "'25 08 25",
     rotate: "-2.8deg",
     aspectRatio: "3/4",
@@ -50,6 +53,7 @@ export default function MemoryCollage() {
 
   const [activePhoto, setActivePhoto] = useState<{
     src: string;
+    type?: "video" | "image";
     note: string;
     date: string;
     aspectRatio: string;
@@ -250,7 +254,7 @@ export default function MemoryCollage() {
                   {/* Washi Tape Accent */}
                   <div className="polaroid-tape" style={{ width: "70px", height: "20px", top: "-10px" }} />
 
-                  {/* Photo Container */}
+                  {/* Photo / Video Container */}
                   <div
                     style={{
                       position: "relative",
@@ -258,26 +262,45 @@ export default function MemoryCollage() {
                       aspectRatio: item.aspectRatio,
                       borderRadius: "2px",
                       overflow: "hidden",
-                      background: "#e8f2fa",
+                      background: "#0a1628",
                     }}
                   >
-                    <Image
-                      src={item.src}
-                      alt={item.alt}
-                      fill
-                      loading="lazy"
-                      style={{ objectFit: "cover", objectPosition: item.objectPosition }}
-                      sizes="(max-width: 768px) 85vw, 340px"
-                    />
+                    {item.type === "video" ? (
+                      <video
+                        src={item.src}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: item.objectPosition,
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={item.src}
+                        alt={item.alt}
+                        fill
+                        loading="lazy"
+                        style={{ objectFit: "cover", objectPosition: item.objectPosition }}
+                        sizes="(max-width: 768px) 85vw, 340px"
+                      />
+                    )}
                     <div
                       style={{
                         position: "absolute",
                         inset: 0,
                         background:
                           "linear-gradient(180deg, transparent 75%, rgba(0,0,0,0.3) 100%)",
+                        pointerEvents: "none",
                       }}
                     />
-                    <span className="led-date" style={{ position: "absolute", bottom: "6px", right: "8px", fontSize: "0.65rem" }}>
+                    <span className="led-date" style={{ position: "absolute", bottom: "6px", right: "8px", fontSize: "0.65rem", zIndex: 10 }}>
                       {item.date}
                     </span>
                   </div>
@@ -346,15 +369,34 @@ export default function MemoryCollage() {
                 maxHeight: "65vh",
                 borderRadius: "2px",
                 overflow: "hidden",
+                background: "#0a1628",
               }}
             >
-              <Image
-                src={activePhoto.src}
-                alt={activePhoto.note}
-                fill
-                style={{ objectFit: "cover", objectPosition: activePhoto.objectPosition }}
-              />
-              <span className="led-date" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+              {activePhoto.type === "video" ? (
+                <video
+                  src={activePhoto.src}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: activePhoto.objectPosition,
+                  }}
+                />
+              ) : (
+                <Image
+                  src={activePhoto.src}
+                  alt={activePhoto.note}
+                  fill
+                  style={{ objectFit: "cover", objectPosition: activePhoto.objectPosition }}
+                />
+              )}
+              <span className="led-date" style={{ position: "absolute", bottom: "10px", right: "10px", zIndex: 10 }}>
                 {activePhoto.date}
               </span>
             </div>

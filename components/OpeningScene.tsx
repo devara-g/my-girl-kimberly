@@ -14,7 +14,6 @@ export default function OpeningScene() {
   const dividerRef  = useRef<HTMLDivElement>(null);
   const line3Ref    = useRef<HTMLParagraphElement>(null);
   const line4Ref    = useRef<HTMLParagraphElement>(null);
-  const dateRef     = useRef<HTMLDivElement>(null);
   const scrollRef   = useRef<HTMLDivElement>(null);
   const petal1Ref   = useRef<HTMLDivElement>(null);
   const petal2Ref   = useRef<HTMLDivElement>(null);
@@ -89,15 +88,7 @@ export default function OpeningScene() {
         "+=0.03"
       );
 
-      // 8. Date stamp at the end
-      tl.fromTo(
-        dateRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" },
-        "+=0.04"
-      );
-
-      // 9. Scroll hint fades out
+      // 8. Scroll hint fades out
       tl.to(scrollRef.current, { opacity: 0, duration: 0.15 });
     }, sectionRef);
 
@@ -238,7 +229,7 @@ export default function OpeningScene() {
           alignItems: "center",
           textAlign: "center",
           padding: "0 clamp(1.2rem, 6vw, 5rem)",
-          maxWidth: "860px",
+          maxWidth: "920px",
           width: "100%",
           gap: "0",
         }}
@@ -247,10 +238,10 @@ export default function OpeningScene() {
         <span
           className="film-edge"
           style={{
-            fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)",
-            letterSpacing: "0.26em",
+            fontSize: "clamp(0.58rem, 1.2vw, 0.68rem)",
+            letterSpacing: "0.28em",
             color: "#2563eb",
-            marginBottom: "clamp(0.8rem, 2.5vw, 1.6rem)",
+            marginBottom: "clamp(0.8rem, 2.5vw, 1.5rem)",
           }}
         >
           A SPECIAL TRIBUTE · RATU BUNGA SYAKIRA
@@ -261,35 +252,35 @@ export default function OpeningScene() {
           ref={line1Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(1.75rem, 5.5vw, 4.8rem)",
+            fontSize: "clamp(1.85rem, 5.2vw, 4.5rem)",
             fontWeight: 300,
             fontStyle: "italic",
             color: "#0f1d36",
-            lineHeight: 1.2,
+            lineHeight: 1.25,
             letterSpacing: "-0.015em",
             opacity: 0,
             marginBottom: "0.3rem",
             textShadow: "0 4px 30px rgba(59,130,246,0.12)",
           }}
         >
-          &ldquo;A flower blooming under the August sky...
+          &ldquo;Di bawah teduhnya langit Agustus,
         </h1>
         <p
           ref={line2Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(1.75rem, 5.5vw, 4.8rem)",
+            fontSize: "clamp(1.85rem, 5.2vw, 4.5rem)",
             fontWeight: 300,
             fontStyle: "italic",
             color: "#2563eb",
-            lineHeight: 1.2,
+            lineHeight: 1.25,
             letterSpacing: "-0.015em",
             opacity: 0,
-            marginBottom: "clamp(1.2rem, 3.5vw, 2.4rem)",
+            marginBottom: "clamp(1.2rem, 3vw, 2rem)",
             textShadow: "0 4px 30px rgba(37,99,235,0.18)",
           }}
         >
-          Ratu Bunga Syakira, born to shine bright.&rdquo;
+          Ratu Bunga Syakira hadir membawa cahaya.&rdquo;
         </p>
 
         {/* Decorative divider line with sky blue dot */}
@@ -299,8 +290,8 @@ export default function OpeningScene() {
             display: "flex",
             alignItems: "center",
             gap: "12px",
-            width: "min(280px, 80%)",
-            marginBottom: "clamp(1rem, 2.8vw, 2rem)",
+            width: "min(240px, 70%)",
+            marginBottom: "clamp(1rem, 2.5vw, 1.6rem)",
             opacity: 0,
           }}
         >
@@ -314,42 +305,27 @@ export default function OpeningScene() {
           ref={line3Ref}
           className="font-handwritten"
           style={{
-            fontSize: "clamp(1.25rem, 3.2vw, 2.2rem)",
+            fontSize: "clamp(1.2rem, 2.8vw, 1.95rem)",
             color: "#2563eb",
             opacity: 0,
             lineHeight: 1.4,
-            marginBottom: "0.2rem",
+            marginBottom: "0.25rem",
           }}
         >
-          &ldquo;semoga harimu seindah senyum manismu...&rdquo;
+          terima kasih telah tumbuh menjadi sosok yang luar biasa dan menginspirasi...
         </p>
         <p
           ref={line4Ref}
           className="font-handwritten"
           style={{
-            fontSize: "clamp(1rem, 2.2vw, 1.5rem)",
+            fontSize: "clamp(0.95rem, 2vw, 1.35rem)",
             color: "#334e68",
             opacity: 0,
-            lineHeight: 1.5,
-            marginBottom: "clamp(1rem, 2.5vw, 2rem)",
+            lineHeight: 1.4,
           }}
         >
           — 25 Agustus 2010
         </p>
-
-        {/* Date stamp */}
-        <div ref={dateRef} style={{ opacity: 0 }}>
-          <span
-            className="led-date"
-            style={{
-              fontSize: "clamp(0.65rem, 1.4vw, 0.78rem)",
-              letterSpacing: "0.16em",
-              color: "#0284c7",
-            }}
-          >
-            25.08.2010 · SWEET CELEBRATION
-          </span>
-        </div>
       </div>
 
       {/* Scroll Indicator */}
@@ -357,30 +333,30 @@ export default function OpeningScene() {
         ref={scrollRef}
         style={{
           position: "absolute",
-          bottom: "clamp(16px, 4vh, 36px)",
+          bottom: "clamp(14px, 3vh, 28px)",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "8px",
+          gap: "6px",
           zIndex: 10,
         }}
       >
         <span
           style={{
             fontSize: "0.58rem",
-            letterSpacing: "0.2em",
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
             color: "#334e68",
           }}
         >
-          Scroll to celebrate her journey
+          Scroll to explore her journey
         </span>
         <div
           style={{
             width: "1px",
-            height: "28px",
+            height: "24px",
             background: "linear-gradient(180deg, #3b82f6 0%, transparent 100%)",
             animation: "scrollPulse 2s ease-in-out infinite",
           }}

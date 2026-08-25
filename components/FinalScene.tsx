@@ -396,7 +396,13 @@ export default function FinalScene() {
           }}
         >
           <button
-            onClick={() => { setShowFlowerModal(true); fireConfetti(); }}
+            onClick={() => {
+              setShowFlowerModal(true);
+              fireConfetti();
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("openBouquetMusic"));
+              }
+            }}
             className="final-primary-btn"
             style={{
               display: "inline-flex",
