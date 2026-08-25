@@ -11,6 +11,7 @@ import ChapterTwo from "@/components/ChapterTwo";
 import EmotionalBuild from "@/components/EmotionalBuild";
 import MemoryCollage from "@/components/MemoryCollage";
 import FinalScene from "@/components/FinalScene";
+import ScrollGuideHint from "@/components/ScrollGuideHint";
 
 // Canvas background components loaded client-side
 const ParticleField = dynamic(() => import("@/components/ParticleField"), { ssr: false });
@@ -29,6 +30,9 @@ export default function Home() {
 
       {/* Floating Audio Player synced with loading complete */}
       <AudioPlayer autoPlayTrigger={loadingComplete} />
+
+      {/* Floating Scroll Hint for Mobile & Desktop */}
+      {loadingComplete && <ScrollGuideHint />}
 
       <LenisProvider>
         <main style={{ position: "relative", zIndex: 2 }}>

@@ -50,12 +50,13 @@ export default function EmotionalBuild() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=260%",
-          scrub: 2.2,
+          end: isMobile ? "+=130%" : "+=220%",
+          scrub: 1.6,
           pin: true,
           pinSpacing: true,
         },
@@ -111,7 +112,13 @@ export default function EmotionalBuild() {
     <section
       ref={sectionRef}
       id="emotional-build"
-      style={{ height: "100vh", position: "relative", overflow: "hidden", background: "#edf4fc" }}
+      style={{
+        minHeight: "100svh",
+        height: "100dvh",
+        position: "relative",
+        overflow: "hidden",
+        background: "#edf4fc",
+      }}
     >
       {/* Background video — landscape */}
       <div

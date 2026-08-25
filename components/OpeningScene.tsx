@@ -14,18 +14,18 @@ export default function OpeningScene() {
   const dividerRef  = useRef<HTMLDivElement>(null);
   const line3Ref    = useRef<HTMLParagraphElement>(null);
   const line4Ref    = useRef<HTMLParagraphElement>(null);
-  const scrollRef   = useRef<HTMLDivElement>(null);
   const petal1Ref   = useRef<HTMLDivElement>(null);
   const petal2Ref   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=280%",
-          scrub: 2,
+          end: isMobile ? "+=140%" : "+=240%",
+          scrub: 1.5,
           pin: true,
           pinSpacing: true,
         },
@@ -87,9 +87,6 @@ export default function OpeningScene() {
         { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" },
         "+=0.03"
       );
-
-      // 8. Scroll hint fades out
-      tl.to(scrollRef.current, { opacity: 0, duration: 0.15 });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -100,7 +97,8 @@ export default function OpeningScene() {
       ref={sectionRef}
       id="opening"
       style={{
-        height: "100vh",
+        minHeight: "100svh",
+        height: "100dvh",
         position: "relative",
         overflow: "hidden",
         background: "#f4f8fd",
@@ -326,41 +324,6 @@ export default function OpeningScene() {
         >
           — 25 Agustus 2010
         </p>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div
-        ref={scrollRef}
-        style={{
-          position: "absolute",
-          bottom: "clamp(14px, 3vh, 28px)",
-          left: "50%",
-          transform: "translateX(-50%)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "6px",
-          zIndex: 10,
-        }}
-      >
-        <span
-          style={{
-            fontSize: "0.58rem",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "#334e68",
-          }}
-        >
-          Scroll to explore her journey
-        </span>
-        <div
-          style={{
-            width: "1px",
-            height: "24px",
-            background: "linear-gradient(180deg, #3b82f6 0%, transparent 100%)",
-            animation: "scrollPulse 2s ease-in-out infinite",
-          }}
-        />
       </div>
 
       <style>{`

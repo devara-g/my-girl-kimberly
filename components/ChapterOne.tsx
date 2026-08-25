@@ -137,12 +137,13 @@ export default function ChapterOne() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: "+=220%",
-          scrub: 2,
+          end: isMobile ? "+=130%" : "+=200%",
+          scrub: 1.5,
           pin: true,
           pinSpacing: true,
         },
@@ -171,7 +172,13 @@ export default function ChapterOne() {
     <section
       ref={sectionRef}
       id="chapter-one"
-      style={{ height: "105vh", position: "relative", overflow: "hidden", background: "#060e1f" }}
+      style={{
+        minHeight: "100svh",
+        height: "100dvh",
+        position: "relative",
+        overflow: "hidden",
+        background: "#060e1f",
+      }}
     >
       {/* Animated aurora canvas */}
       <AuroraCanvas />
@@ -187,25 +194,27 @@ export default function ChapterOne() {
           justifyContent: "center",
           height: "100%",
           textAlign: "center",
-          padding: "0 clamp(1.5rem, 6vw, 4rem)",
+          padding: "0 clamp(1.2rem, 5vw, 4rem)",
           gap: "1.2rem",
+          maxWidth: "880px",
+          margin: "0 auto",
         }}
       >
         <span
           ref={labelRef}
           className="film-edge"
-          style={{ opacity: 0, color: "rgba(147,197,253,0.65)" }}
+          style={{ opacity: 0, color: "rgba(147,197,253,0.65)", fontSize: "clamp(0.58rem, 1.2vw, 0.68rem)", letterSpacing: "0.26em" }}
         >
           CHAPTER I — THE BLOOMING STAR
         </span>
 
         <div className="chapter-line" style={{ background: "rgba(96,165,250,0.35)" }} />
 
-        <div ref={textRef} style={{ opacity: 0, maxWidth: "820px" }}>
+        <div ref={textRef} style={{ opacity: 0, maxWidth: "820px", width: "100%" }}>
           <h2
             className="font-display"
             style={{
-              fontSize: "clamp(1.8rem, 5vw, 3.8rem)",
+              fontSize: "clamp(1.75rem, 5vw, 3.8rem)",
               fontWeight: 300,
               fontStyle: "italic",
               color: "rgba(255,255,255,0.92)",
@@ -219,12 +228,12 @@ export default function ChapterOne() {
           </h2>
         </div>
 
-        <div ref={noteRef} style={{ opacity: 0, marginTop: "0.5rem" }}>
+        <div ref={noteRef} style={{ opacity: 0, marginTop: "0.4rem" }}>
           <p
             className="font-handwritten"
-            style={{ fontSize: "clamp(1.3rem, 2.8vw, 2rem)", color: "rgba(147,197,253,0.88)" }}
+            style={{ fontSize: "clamp(1.15rem, 2.8vw, 1.85rem)", color: "rgba(147,197,253,0.88)" }}
           >
-            terima kasih telah tumbuh menjadi sosok yang luar biasa dan menginspirasi...
+            setiap langkah dan senyumanmu membawa kehangatan yang tak tergantikan...
           </p>
         </div>
       </div>

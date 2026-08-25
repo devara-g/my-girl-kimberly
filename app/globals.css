@@ -26,6 +26,8 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -34,7 +36,9 @@ body {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
+  max-width: 100vw;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
   selection-background-color: rgba(59,130,246,0.25);
 }
 
@@ -179,7 +183,6 @@ body {
   margin: 1.2rem auto;
 }
 
-/* ─── Mobile Optimizations & Responsive Utilities ───────────────────── */
 @media (max-width: 768px) {
   /* Prevent hover scale jumps on mobile touch */
   .polaroid-card:hover {
@@ -204,6 +207,23 @@ body {
     font-size: 0.65rem;
     letter-spacing: 0.1em;
   }
+
+  .collage-grid-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 32px !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    padding: 0 16px !important;
+  }
+
+  .collage-card {
+    max-width: 310px !important;
+    width: 100% !important;
+    padding: 12px 12px 24px 12px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -212,7 +232,7 @@ body {
   }
 
   .polaroid-card {
-    padding: 10px 10px 36px 10px;
+    padding: 10px 10px 32px 10px;
   }
 }
 

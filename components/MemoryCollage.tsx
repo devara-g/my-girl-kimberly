@@ -123,73 +123,70 @@ export default function MemoryCollage() {
     return () => ctx.revert();
   }, []);
 
-  // Organize items by columns for clean 3-column masonry layout
-  const col1 = COLLAGE_ITEMS.filter((item) => item.column === 1);
-  const col2 = COLLAGE_ITEMS.filter((item) => item.column === 2);
-  const col3 = COLLAGE_ITEMS.filter((item) => item.column === 3);
-
-  const columns = [
-    { items: col1, offset: "0px" },
-    { items: col2, offset: "36px" }, // Staggered down for organic feel
-    { items: col3, offset: "12px" },
-  ];
-
   return (
     <section
       ref={sectionRef}
       id="collage"
       style={{
-        background:
-          "linear-gradient(180deg, #e2eef9 0%, #ebf4fc 60%, #f4f8fd 100%)",
-        padding: "clamp(5rem, 12vh, 10rem) clamp(1.2rem, 5vw, 4rem)",
         position: "relative",
+        background: "linear-gradient(180deg, #f4f8fd 0%, #ebf4fc 50%, #f0f7ff 100%)",
+        padding: "clamp(60px, 10vh, 120px) clamp(16px, 4vw, 40px)",
         overflow: "hidden",
       }}
     >
-      {/* Ambient Light Leak */}
+      {/* Background Soft Glows */}
       <div
-        className="light-leak"
         style={{
-          top: "10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "85%",
-          height: "75%",
-          background:
-            "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 65%)",
-          filter: "blur(100px)",
-          zIndex: 0,
+          position: "absolute",
+          top: "15%",
+          left: "5%",
+          width: "450px",
+          height: "450px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "10%",
+          right: "5%",
+          width: "400px",
+          height: "400px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%)",
+          pointerEvents: "none",
         }}
       />
 
-      {/* Title Header */}
+      {/* Section Header */}
       <div
         ref={titleRef}
         style={{
           textAlign: "center",
-          marginBottom: "clamp(3.5rem, 8vw, 6rem)",
+          marginBottom: "clamp(36px, 6vw, 64px)",
           position: "relative",
           zIndex: 2,
           opacity: 0,
         }}
       >
         <span
+          className="film-edge"
           style={{
-            fontFamily: "'Poppins', sans-serif",
-            fontSize: "0.65rem",
-            fontWeight: 500,
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
+            fontSize: "clamp(0.6rem, 1.3vw, 0.72rem)",
+            letterSpacing: "0.28em",
             color: "#2563eb",
+            display: "block",
+            marginBottom: "10px",
           }}
         >
           GALLERY OF BEAUTIFUL MOMENTS
         </span>
-        <div className="chapter-line" />
         <h2
           className="font-display"
           style={{
-            fontSize: "clamp(1.6rem, 4.5vw, 3rem)",
+            fontSize: "clamp(1.75rem, 4.5vw, 3rem)",
             fontWeight: 300,
             fontStyle: "italic",
             color: "#0f1d36",
@@ -202,129 +199,123 @@ export default function MemoryCollage() {
         </p>
       </div>
 
-      {/* Handcrafted 3-Column Masonry Scrapbook */}
+      {/* Responsive Scrapbook Container */}
       <div
         ref={containerRef}
-        className="collage-grid"
+        className="collage-grid-container"
         style={{
-          maxWidth: "1160px",
-          margin: "0 auto",
           position: "relative",
           zIndex: 2,
           opacity: 0,
         }}
       >
-        {columns.map((col, colIdx) => (
+        {COLLAGE_ITEMS.map((item, idx) => (
           <div
-            key={colIdx}
-            className={`collage-column col-${colIdx + 1}`}
+            key={idx}
+            className={`collage-col col-offset-${idx + 1}`}
             style={{
+              width: "100%",
               display: "flex",
-              flexDirection: "column",
-              gap: "clamp(24px, 3.5vw, 42px)",
+              justifyContent: "center",
             }}
           >
-            {col.items.map((item, itemIdx) => {
-              const globalIdx = colIdx * 3 + itemIdx;
-              return (
+            <div
+              ref={(el) => { itemRefs.current[idx] = el; }}
+              onClick={() => setActivePhoto(item)}
+              className="polaroid-card collage-card"
+              style={{
+                transform: `rotate(${item.rotate})`,
+                cursor: "pointer",
+                opacity: 0,
+                display: "flex",
+                flexDirection: "column",
+                background: "#ffffff",
+                padding: "12px 12px 18px 12px",
+                borderRadius: "4px",
+                border: "1px solid rgba(59,130,246,0.15)",
+                boxShadow:
+                  "0 14px 32px -6px rgba(37,99,235,0.12), 0 4px 12px rgba(15,29,54,0.04)",
+                transition:
+                  "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease",
+                maxWidth: "320px",
+                width: "100%",
+                margin: "0 auto",
+              }}
+            >
+              {/* Washi Tape Accent */}
+              <div className="polaroid-tape" style={{ width: "70px", height: "20px", top: "-10px" }} />
+
+              {/* Photo / Video Container */}
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: item.aspectRatio,
+                  borderRadius: "2px",
+                  overflow: "hidden",
+                  background: "#0a1628",
+                }}
+              >
+                {item.type === "video" ? (
+                  <video
+                    src={item.src}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: item.objectPosition,
+                    }}
+                  />
+                ) : (
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    loading="lazy"
+                    style={{ objectFit: "cover", objectPosition: item.objectPosition }}
+                    sizes="(max-width: 768px) 85vw, 320px"
+                  />
+                )}
                 <div
-                  key={itemIdx}
-                  ref={(el) => { itemRefs.current[globalIdx] = el; }}
-                  onClick={() => setActivePhoto(item)}
-                  className="polaroid-card collage-card"
                   style={{
-                    transform: `rotate(${item.rotate})`,
-                    cursor: "pointer",
-                    opacity: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    background: "#ffffff",
-                    padding: "12px 12px 16px 12px",
-                    borderRadius: "4px",
-                    border: "1px solid rgba(59,130,246,0.15)",
-                    boxShadow:
-                      "0 14px 32px -6px rgba(37,99,235,0.12), 0 4px 12px rgba(15,29,54,0.04)",
-                    transition:
-                      "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease",
-                    maxWidth: "340px",
-                    width: "100%",
-                    margin: "0 auto",
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(180deg, transparent 75%, rgba(0,0,0,0.3) 100%)",
+                    pointerEvents: "none",
+                  }}
+                />
+                <span className="led-date" style={{ position: "absolute", bottom: "6px", right: "8px", fontSize: "0.65rem", zIndex: 10 }}>
+                  {item.date}
+                </span>
+              </div>
+
+              {/* Polaroid Handwritten Caption */}
+              <div style={{ paddingTop: "12px", textAlign: "center", paddingBottom: "4px" }}>
+                <span
+                  className="font-handwritten"
+                  style={{
+                    fontSize: "clamp(1.15rem, 3.2vw, 1.35rem)",
+                    color: "#0f1d36",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "6px",
+                    fontWeight: 500,
+                    lineHeight: 1.3,
                   }}
                 >
-                  {/* Washi Tape Accent */}
-                  <div className="polaroid-tape" style={{ width: "70px", height: "20px", top: "-10px" }} />
-
-                  {/* Photo / Video Container */}
-                  <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      aspectRatio: item.aspectRatio,
-                      borderRadius: "2px",
-                      overflow: "hidden",
-                      background: "#0a1628",
-                    }}
-                  >
-                    {item.type === "video" ? (
-                      <video
-                        src={item.src}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          objectPosition: item.objectPosition,
-                        }}
-                      />
-                    ) : (
-                      <Image
-                        src={item.src}
-                        alt={item.alt}
-                        fill
-                        loading="lazy"
-                        style={{ objectFit: "cover", objectPosition: item.objectPosition }}
-                        sizes="(max-width: 768px) 85vw, 340px"
-                      />
-                    )}
-                    <div
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        background:
-                          "linear-gradient(180deg, transparent 75%, rgba(0,0,0,0.3) 100%)",
-                        pointerEvents: "none",
-                      }}
-                    />
-                    <span className="led-date" style={{ position: "absolute", bottom: "6px", right: "8px", fontSize: "0.65rem", zIndex: 10 }}>
-                      {item.date}
-                    </span>
-                  </div>
-
-                  {/* Polaroid Handwritten Caption */}
-                  <div style={{ paddingTop: "12px", textAlign: "center" }}>
-                    <span
-                      className="font-handwritten"
-                      style={{
-                        fontSize: "clamp(1.1rem, 2.8vw, 1.25rem)",
-                        color: "#0f1d36",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        fontWeight: 500,
-                      }}
-                    >
-                      <HeartSmallIcon size={12} color="#2563eb" />
-                      {item.note}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+                  <HeartSmallIcon size={13} color="#2563eb" />
+                  {item.note}
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -427,36 +418,33 @@ export default function MemoryCollage() {
       )}
 
       <style>{`
-        .collage-grid {
-          display: grid;
-          gap: clamp(20px, 3.5vw, 36px);
+        .collage-grid-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 32px;
+          max-width: 340px;
+          margin: 0 auto;
+          width: 100%;
         }
 
         /* Desktop: 3 columns with artistic staggered offsets */
         @media (min-width: 769px) {
-          .collage-grid {
+          .collage-grid-container {
+            display: grid;
             grid-template-columns: repeat(3, 1fr);
+            max-width: 1160px;
+            gap: clamp(20px, 3.5vw, 36px);
+            align-items: start;
           }
-          .collage-column.col-1 {
+          .collage-col.col-offset-1 {
             margin-top: 0px;
           }
-          .collage-column.col-2 {
-            margin-top: 36px;
+          .collage-col.col-offset-2 {
+            margin-top: 40px;
           }
-          .collage-column.col-3 {
-            margin-top: 12px;
-          }
-        }
-
-        /* Mobile: single centered column with natural flow */
-        @media (max-width: 768px) {
-          .collage-grid {
-            grid-template-columns: 1fr;
-            max-width: 360px;
-          }
-          .collage-column {
-            margin-top: 0 !important;
-            gap: 24px !important;
+          .collage-col.col-offset-3 {
+            margin-top: 16px;
           }
         }
 

@@ -295,7 +295,7 @@ export default function ChapterTwo() {
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 1.5rem;
+            gap: 1.2rem;
           }
           .desktop-caption {
             display: none;
@@ -303,14 +303,18 @@ export default function ChapterTwo() {
           .mobile-caption {
             display: block;
             width: 100%;
-            max-width: 380px;
+            max-width: 330px;
             margin: 0 auto;
           }
           .polaroid-wrapper {
             width: 100%;
             display: flex;
             justify-content: center;
-            padding: 0 8px;
+            padding: 0 12px;
+          }
+          .polaroid-wrapper .polaroid-card {
+            max-width: 300px !important;
+            padding: 10px 10px 34px 10px !important;
           }
         }
       `}</style>
