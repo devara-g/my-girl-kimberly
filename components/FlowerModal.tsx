@@ -206,8 +206,11 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxWidth: "440px",
+          maxWidth: "min(440px, 92vw)",
           width: "100%",
+          maxHeight: "92vh",
+          display: "flex",
+          flexDirection: "column",
           background:
             "linear-gradient(170deg, #0b1938 0%, #060e22 55%, #08142c 100%)",
           borderRadius: "24px",
@@ -216,7 +219,8 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
             "0 0 100px rgba(59,130,246,0.28), 0 0 40px rgba(37,99,235,0.2), 0 35px 70px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.08)",
           animation: "modalIn 0.52s cubic-bezier(0.34, 1.56, 0.64, 1)",
           position: "relative",
-          overflow: "hidden",
+          overflowY: "auto",
+          overflowX: "hidden",
           flexShrink: 0,
         }}
       >
@@ -286,8 +290,12 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
         <svg
           viewBox="0 0 400 400"
           width="100%"
-          height="330"
-          style={{ display: "block", overflow: "visible" }}
+          style={{
+            display: "block",
+            overflow: "visible",
+            height: "clamp(220px, 42vh, 320px)",
+            marginTop: "10px",
+          }}
           role="img"
           aria-label="Animated blooming flower bouquet"
         >
@@ -514,7 +522,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
         <div
           style={{
             textAlign: "center",
-            padding: "4px 32px 32px",
+            padding: "4px clamp(16px, 4vw, 32px) clamp(20px, 4vw, 32px)",
             position: "relative",
             zIndex: 10,
           }}
@@ -525,7 +533,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
               height: "1px",
               background:
                 "linear-gradient(90deg, transparent, #3b82f6, transparent)",
-              margin: "0 auto 18px",
+              margin: "0 auto 14px",
             }}
           />
           <p
@@ -535,7 +543,7 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
               fontStyle: "italic",
               fontWeight: 300,
               color: "rgba(224,242,254,0.98)",
-              lineHeight: 1.65,
+              lineHeight: 1.5,
               letterSpacing: "0.01em",
             }}
           >
@@ -544,10 +552,10 @@ export default function FlowerModal({ isOpen, onClose }: Props) {
           <p
             className="font-handwritten"
             style={{
-              fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
+              fontSize: "clamp(0.95rem, 2.6vw, 1.2rem)",
               color: "rgba(186,230,253,0.75)",
-              marginTop: "10px",
-              lineHeight: 1.6,
+              marginTop: "8px",
+              lineHeight: 1.5,
             }}
           >
             semoga harimu selalu dipenuhi cinta, tawa ceria, dan mimpi indah yang mekar sempurna ♡

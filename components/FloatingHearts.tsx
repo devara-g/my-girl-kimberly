@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-interface HeartParticle {
+interface FlowerParticle {
   x: number;
   y: number;
   size: number;
@@ -15,16 +15,17 @@ interface HeartParticle {
   color: string;
   opacity: number;
   pulsePhase: number;
+  petals: number;
 }
 
-const HEART_COLORS = [
-  "rgba(96, 165, 250, ",  // Soft Sky Blue
-  "rgba(59, 130, 246, ",  // Vibrant Royal Blue
-  "rgba(37, 99, 235, ",   // Deep Electric Blue
-  "rgba(147, 197, 253, ", // Light Baby Blue
-  "rgba(186, 230, 253, ", // Pale Ice Blue
-  "rgba(56, 189, 248, ",  // Cyan Blue Sparkle
-  "rgba(251, 191, 36, ",  // Warm Golden Sparkle
+const FLOWER_COLORS = [
+  "rgba(96, 165, 250, ",   // Sky Blue
+  "rgba(147, 197, 253, ",  // Baby Blue
+  "rgba(186, 230, 253, ",  // Ice Blue
+  "rgba(59, 130, 246, ",   // Royal Blue
+  "rgba(251, 191, 36, ",   // Warm Gold
+  "rgba(253, 230, 138, ",  // Soft Yellow
+  "rgba(255, 255, 255, ",  // White
 ];
 
 export default function FloatingHearts() {
@@ -39,98 +40,97 @@ export default function FloatingHearts() {
     let rafId: number;
     let W = 0;
     let H = 0;
-    let hearts: HeartParticle[] = [];
+    let flowers: FlowerParticle[] = [];
 
     const resize = () => {
       W = canvas.width = window.innerWidth;
       H = canvas.height = window.innerHeight;
     };
 
-    const createHeart = (): HeartParticle => {
-      const colorPrefix = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
+    const createFlower = (): FlowerParticle => {
+      const colorPrefix = FLOWER_COLORS[Math.floor(Math.random() * FLOWER_COLORS.length)];
       return {
         x: Math.random() * W,
-        y: H + 20 + Math.random() * 80, // Start below screen, float gently upwards
-        size: Math.random() * 12 + 6,
-        speedY: -(Math.random() * 0.7 + 0.3), // Float upwards
-        speedX: (Math.random() - 0.5) * 0.5,
-        rotation: (Math.random() - 0.5) * 0.4,
-        rotationSpeed: (Math.random() - 0.5) * 0.015,
-        oscillationSpeed: Math.random() * 0.02 + 0.01,
-        oscillationAmplitude: Math.random() * 1.8 + 0.6,
+        y: H + 20 + Math.random() * 80,
+        size: Math.random() * 10 + 5,
+        speedY: -(Math.random() * 0.65 + 0.25),
+        speedX: (Math.random() - 0.5) * 0.4,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.018,
+        oscillationSpeed: Math.random() * 0.022 + 0.008,
+        oscillationAmplitude: Math.random() * 1.6 + 0.5,
         color: colorPrefix,
-        opacity: Math.random() * 0.5 + 0.3,
+        opacity: Math.random() * 0.5 + 0.25,
         pulsePhase: Math.random() * Math.PI * 2,
+        petals: Math.random() < 0.5 ? 5 : 6,
       };
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    // Initial batch of floating hearts
-    hearts = Array.from({ length: 30 }, () => {
-      const h = createHeart();
-      h.y = Math.random() * H; // Distribute across full height initially
-      return h;
+    flowers = Array.from({ length: 12 }, () => {
+      const f = createFlower();
+      f.y = Math.random() * H;
+      return f;
     });
 
-    // Helper to draw a sleek vector heart path on Canvas
-    const drawHeart = (ctx: CanvasRenderingContext2D, size: number) => {
+    // Draw a flower with N petals
+    const drawFlower = (
+      ctx: CanvasRenderingContext2D,
+      size: number,
+      petals: number,
+      color: string,
+      opacity: number
+    ) => {
+      const petalLength = size;
+      const petalWidth  = size * 0.42;
+
+      // Petals
+      for (let p = 0; p < petals; p++) {
+        const angle = (Math.PI * 2 * p) / petals;
+        ctx.save();
+        ctx.rotate(angle);
+        ctx.beginPath();
+        ctx.ellipse(0, -petalLength * 0.55, petalWidth * 0.5, petalLength * 0.55, 0, 0, Math.PI * 2);
+        ctx.fillStyle = `${color}${opacity.toFixed(2)})`;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Center circle
       ctx.beginPath();
-      const topCurveHeight = size * 0.3;
-      ctx.moveTo(0, topCurveHeight);
-      // Top left curve
-      ctx.bezierCurveTo(
-        -size / 2, -topCurveHeight,
-        -size, size / 3,
-        0, size
-      );
-      // Top right curve
-      ctx.bezierCurveTo(
-        size, size / 3,
-        size / 2, -topCurveHeight,
-        0, topCurveHeight
-      );
-      ctx.closePath();
+      ctx.arc(0, 0, size * 0.22, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251, 191, 36, ${(opacity * 0.9).toFixed(2)})`;
+      ctx.fill();
     };
 
     let tick = 0;
+    let frame = 0;
     const animate = () => {
+      frame++;
+      // Throttle: only update every 2 frames (~30fps) for perf
+      if (frame % 2 !== 0) { rafId = requestAnimationFrame(animate); return; }
       tick++;
       ctx.clearRect(0, 0, W, H);
 
-      for (let i = 0; i < hearts.length; i++) {
-        const h = hearts[i];
-        h.y += h.speedY;
-        h.x += h.speedX + Math.sin(tick * h.oscillationSpeed) * h.oscillationAmplitude * 0.4;
-        h.rotation += h.rotationSpeed;
+      for (let i = 0; i < flowers.length; i++) {
+        const f = flowers[i];
+        f.y += f.speedY;
+        f.x += f.speedX + Math.sin(tick * f.oscillationSpeed) * f.oscillationAmplitude * 0.38;
+        f.rotation += f.rotationSpeed;
 
-        // Subtle heart pulse
-        const pulse = 1 + Math.sin(tick * 0.04 + h.pulsePhase) * 0.12;
-        const currentSize = h.size * pulse;
+        const pulse = 1 + Math.sin(tick * 0.035 + f.pulsePhase) * 0.10;
+        const currentSize = f.size * pulse;
 
         ctx.save();
-        ctx.translate(h.x, h.y);
-        ctx.rotate(h.rotation);
-
-        // Fill heart
-        drawHeart(ctx, currentSize);
-        ctx.fillStyle = `${h.color}${h.opacity.toFixed(2)})`;
-        ctx.shadowColor = h.color + "0.6)";
-        ctx.shadowBlur = 12;
-        ctx.fill();
-
-        // Inner glowing sparkle highlight
-        ctx.beginPath();
-        ctx.arc(-currentSize * 0.2, currentSize * 0.2, currentSize * 0.15, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${(h.opacity * 0.4).toFixed(2)})`;
-        ctx.fill();
-
+        ctx.translate(f.x, f.y);
+        ctx.rotate(f.rotation);
+        drawFlower(ctx, currentSize, f.petals, f.color, f.opacity);
         ctx.restore();
 
-        // Respawn hearts floating above top of screen
-        if (h.y < -30) {
-          hearts[i] = createHeart();
+        if (f.y < -30) {
+          flowers[i] = createFlower();
         }
       }
 

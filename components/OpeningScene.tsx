@@ -156,12 +156,13 @@ export default function OpeningScene() {
       />
 
       {/* Film label top-left */}
-      <div style={{ position: "absolute", top: "24px", left: "28px", zIndex: 10 }}>
+      <div className="opening-top-left" style={{ position: "absolute", top: "24px", left: "28px", zIndex: 10 }}>
         <span className="film-edge">KODAK 400TX · SAFETY FILM</span>
       </div>
 
       {/* LED date top-right */}
       <div
+        className="opening-top-right"
         style={{
           position: "absolute",
           top: "24px",
@@ -188,36 +189,40 @@ export default function OpeningScene() {
       {/* Decorative petal ornaments */}
       <div
         ref={petal1Ref}
+        className="opening-petal petal-left"
         style={{
           position: "absolute",
-          left: "clamp(40px, 8vw, 120px)",
+          left: "clamp(10px, 6vw, 120px)",
           top: "50%",
           transform: "translateY(-50%)",
-          zIndex: 3,
+          zIndex: 2,
           opacity: 0,
-          fontSize: "clamp(3rem, 7vw, 6rem)",
+          fontSize: "clamp(2.5rem, 6vw, 6rem)",
           lineHeight: 1,
-          color: "rgba(59,130,246,0.22)",
+          color: "rgba(59,130,246,0.18)",
           userSelect: "none",
           fontFamily: "serif",
+          pointerEvents: "none",
         }}
       >
         ✿
       </div>
       <div
         ref={petal2Ref}
+        className="opening-petal petal-right"
         style={{
           position: "absolute",
-          right: "clamp(40px, 8vw, 120px)",
+          right: "clamp(10px, 6vw, 120px)",
           top: "50%",
           transform: "translateY(-50%)",
-          zIndex: 3,
+          zIndex: 2,
           opacity: 0,
-          fontSize: "clamp(3rem, 7vw, 6rem)",
+          fontSize: "clamp(2.5rem, 6vw, 6rem)",
           lineHeight: 1,
-          color: "rgba(59,130,246,0.22)",
+          color: "rgba(59,130,246,0.18)",
           userSelect: "none",
           fontFamily: "serif",
+          pointerEvents: "none",
         }}
       >
         ✿
@@ -232,8 +237,9 @@ export default function OpeningScene() {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
-          padding: "0 clamp(2rem, 8vw, 6rem)",
+          padding: "0 clamp(1.2rem, 6vw, 5rem)",
           maxWidth: "860px",
+          width: "100%",
           gap: "0",
         }}
       >
@@ -241,10 +247,10 @@ export default function OpeningScene() {
         <span
           className="film-edge"
           style={{
-            fontSize: "0.65rem",
-            letterSpacing: "0.32em",
+            fontSize: "clamp(0.55rem, 1.2vw, 0.65rem)",
+            letterSpacing: "0.26em",
             color: "#2563eb",
-            marginBottom: "1.6rem",
+            marginBottom: "clamp(0.8rem, 2.5vw, 1.6rem)",
           }}
         >
           A SPECIAL TRIBUTE · RATU BUNGA SYAKIRA
@@ -255,14 +261,14 @@ export default function OpeningScene() {
           ref={line1Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
+            fontSize: "clamp(1.75rem, 5.5vw, 4.8rem)",
             fontWeight: 300,
             fontStyle: "italic",
             color: "#0f1d36",
-            lineHeight: 1.18,
+            lineHeight: 1.2,
             letterSpacing: "-0.015em",
             opacity: 0,
-            marginBottom: "0.6rem",
+            marginBottom: "0.3rem",
             textShadow: "0 4px 30px rgba(59,130,246,0.12)",
           }}
         >
@@ -272,14 +278,14 @@ export default function OpeningScene() {
           ref={line2Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(2.4rem, 6.5vw, 5.2rem)",
+            fontSize: "clamp(1.75rem, 5.5vw, 4.8rem)",
             fontWeight: 300,
             fontStyle: "italic",
             color: "#2563eb",
-            lineHeight: 1.18,
+            lineHeight: 1.2,
             letterSpacing: "-0.015em",
             opacity: 0,
-            marginBottom: "2.8rem",
+            marginBottom: "clamp(1.2rem, 3.5vw, 2.4rem)",
             textShadow: "0 4px 30px rgba(37,99,235,0.18)",
           }}
         >
@@ -293,8 +299,8 @@ export default function OpeningScene() {
             display: "flex",
             alignItems: "center",
             gap: "12px",
-            width: "280px",
-            marginBottom: "2.2rem",
+            width: "min(280px, 80%)",
+            marginBottom: "clamp(1rem, 2.8vw, 2rem)",
             opacity: 0,
           }}
         >
@@ -308,11 +314,11 @@ export default function OpeningScene() {
           ref={line3Ref}
           className="font-handwritten"
           style={{
-            fontSize: "clamp(1.5rem, 3.5vw, 2.4rem)",
+            fontSize: "clamp(1.25rem, 3.2vw, 2.2rem)",
             color: "#2563eb",
             opacity: 0,
-            lineHeight: 1.5,
-            marginBottom: "0.4rem",
+            lineHeight: 1.4,
+            marginBottom: "0.2rem",
           }}
         >
           &ldquo;semoga harimu seindah senyum manismu...&rdquo;
@@ -321,11 +327,11 @@ export default function OpeningScene() {
           ref={line4Ref}
           className="font-handwritten"
           style={{
-            fontSize: "clamp(1.1rem, 2.5vw, 1.6rem)",
+            fontSize: "clamp(1rem, 2.2vw, 1.5rem)",
             color: "#334e68",
             opacity: 0,
-            lineHeight: 1.6,
-            marginBottom: "2.4rem",
+            lineHeight: 1.5,
+            marginBottom: "clamp(1rem, 2.5vw, 2rem)",
           }}
         >
           — 25 Agustus 2010
@@ -336,8 +342,8 @@ export default function OpeningScene() {
           <span
             className="led-date"
             style={{
-              fontSize: "0.78rem",
-              letterSpacing: "0.2em",
+              fontSize: "clamp(0.65rem, 1.4vw, 0.78rem)",
+              letterSpacing: "0.16em",
               color: "#0284c7",
             }}
           >
@@ -351,20 +357,20 @@ export default function OpeningScene() {
         ref={scrollRef}
         style={{
           position: "absolute",
-          bottom: "40px",
+          bottom: "clamp(16px, 4vh, 36px)",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "10px",
+          gap: "8px",
           zIndex: 10,
         }}
       >
         <span
           style={{
-            fontSize: "0.65rem",
-            letterSpacing: "0.25em",
+            fontSize: "0.58rem",
+            letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: "#334e68",
           }}
@@ -374,7 +380,7 @@ export default function OpeningScene() {
         <div
           style={{
             width: "1px",
-            height: "36px",
+            height: "28px",
             background: "linear-gradient(180deg, #3b82f6 0%, transparent 100%)",
             animation: "scrollPulse 2s ease-in-out infinite",
           }}
@@ -389,6 +395,21 @@ export default function OpeningScene() {
         @keyframes recDot {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0.3; }
+        }
+
+        @media (max-width: 640px) {
+          .opening-top-left {
+            top: 14px !important;
+            left: 16px !important;
+          }
+          .opening-top-right {
+            top: 14px !important;
+            right: 16px !important;
+          }
+          .opening-petal {
+            opacity: 0.1 !important;
+            font-size: 2.2rem !important;
+          }
         }
       `}</style>
     </section>

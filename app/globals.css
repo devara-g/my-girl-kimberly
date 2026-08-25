@@ -178,3 +178,41 @@ body {
   background: linear-gradient(90deg, transparent, #3b82f6, transparent);
   margin: 1.2rem auto;
 }
+
+/* ─── Mobile Optimizations & Responsive Utilities ───────────────────── */
+@media (max-width: 768px) {
+  /* Prevent hover scale jumps on mobile touch */
+  .polaroid-card:hover {
+    transform: none !important;
+    box-shadow: 
+      0 12px 30px -6px rgba(37, 99, 235, 0.12),
+      0 4px 12px rgba(15, 29, 54, 0.04) !important;
+  }
+
+  .polaroid-tape {
+    width: 70px;
+    height: 20px;
+    top: -10px;
+  }
+
+  .film-edge {
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+  }
+
+  .led-date {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .polaroid-card {
+    padding: 10px 10px 36px 10px;
+  }
+}
+

@@ -118,25 +118,27 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
 
   return (
     <div
+      className="audio-player-wrapper"
       style={{
         position: "fixed",
-        bottom: "24px",
-        right: "24px",
+        bottom: "max(20px, env(safe-area-inset-bottom, 20px))",
+        right: "max(20px, env(safe-area-inset-right, 20px))",
         zIndex: 999,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-end",
         gap: "8px",
+        maxWidth: "calc(100vw - 32px)",
       }}
     >
       <button
         onClick={togglePlay}
-        className="glass-panel"
+        className="glass-panel audio-player-btn"
         style={{
           display: "flex",
           alignItems: "center",
-          gap: "12px",
-          padding: "8px 18px 8px 12px",
+          gap: "10px",
+          padding: "8px 16px 8px 10px",
           borderRadius: "30px",
           cursor: "pointer",
           border: isPlaying
@@ -145,14 +147,15 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
           color: "#0f1d36",
           transition: "transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
           boxShadow: isPlaying ? "0 8px 25px rgba(59,130,246,0.25)" : "0 8px 24px rgba(37,99,235,0.12)",
+          maxWidth: "100%",
         }}
         aria-label="Toggle song playback"
       >
         {/* Spinning Vinyl Record Icon */}
         <div
           style={{
-            width: "32px",
-            height: "32px",
+            width: "30px",
+            height: "30px",
             borderRadius: "50%",
             background: "radial-gradient(circle, #0f1d36 30%, #1e3a8a 70%, #3b82f6 100%)",
             border: "1px solid rgba(59,130,246,0.4)",
@@ -166,34 +169,47 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
         >
           <div
             style={{
-              width: "8px",
-              height: "8px",
+              width: "7px",
+              height: "7px",
               borderRadius: "50%",
               background: "#ffffff",
             }}
           />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", overflow: "hidden", minWidth: 0 }}>
           <span
             style={{
-              fontSize: "0.6rem",
-              letterSpacing: "0.15em",
+              fontSize: "0.58rem",
+              letterSpacing: "0.12em",
               color: "#2563eb",
               textTransform: "uppercase",
               fontWeight: 500,
+              whiteSpace: "nowrap",
             }}
           >
             {isPlaying ? `Daniel Caesar · ${formatTime(currentTime)} / ${formatTime(duration || 280)}` : "Daniel Caesar · Transform"}
           </span>
-          <span className="font-handwritten" style={{ fontSize: "1.15rem", color: "#0f1d36", lineHeight: 1, fontWeight: 500 }}>
-            Transform (feat. Charlotte Day Wilson)
+          <span
+            className="font-handwritten"
+            style={{
+              fontSize: "clamp(1rem, 2.5vw, 1.15rem)",
+              color: "#0f1d36",
+              lineHeight: 1.1,
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              maxWidth: "180px",
+            }}
+          >
+            Transform
           </span>
         </div>
 
         {/* Animated Wave Indicator */}
         {isPlaying && (
-          <div style={{ display: "flex", alignItems: "flex-end", gap: "2px", height: "14px", marginLeft: "4px" }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "2px", height: "12px", marginLeft: "2px", flexShrink: 0 }}>
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
@@ -211,8 +227,18 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
 
       <style>{`
         @keyframes soundWave {
-          0% { height: 4px; }
-          100% { height: 14px; }
+          0% { height: 3px; }
+          100% { height: 13px; }
+        }
+
+        @media (max-width: 480px) {
+          .audio-player-wrapper {
+            bottom: max(12px, env(safe-area-inset-bottom, 12px)) !important;
+            right: max(12px, env(safe-area-inset-right, 12px)) !important;
+          }
+          .audio-player-btn {
+            padding: 6px 12px 6px 8px !important;
+          }
         }
       `}</style>
     </div>

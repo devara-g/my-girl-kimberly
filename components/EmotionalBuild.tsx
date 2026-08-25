@@ -179,19 +179,19 @@ export default function EmotionalBuild() {
           alignItems: "center",
           justifyContent: "center",
           textAlign: "center",
-          padding: "0 clamp(1.5rem, 6vw, 5rem)",
-          gap: "clamp(1.2rem, 2.5vw, 1.8rem)",
+          padding: "0 clamp(1.2rem, 5vw, 4rem)",
+          gap: "clamp(1rem, 2.5vw, 1.8rem)",
         }}
       >
         <p
           ref={line1Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(1.6rem, 4.8vw, 3.4rem)",
+            fontSize: "clamp(1.35rem, 4.2vw, 3.2rem)",
             fontStyle: "italic",
             fontWeight: 300,
             color: "#0f1d36",
-            lineHeight: 1.5,
+            lineHeight: 1.4,
             textShadow: "0 2px 25px rgba(255,255,255,0.95)",
             opacity: 0,
           }}
@@ -203,11 +203,11 @@ export default function EmotionalBuild() {
           ref={line2Ref}
           className="font-display"
           style={{
-            fontSize: "clamp(1.6rem, 4.8vw, 3.4rem)",
+            fontSize: "clamp(1.35rem, 4.2vw, 3.2rem)",
             fontStyle: "italic",
             fontWeight: 300,
             color: "#2563eb",
-            lineHeight: 1.5,
+            lineHeight: 1.4,
             textShadow: "0 2px 25px rgba(255,255,255,0.95), 0 0 20px rgba(59,130,246,0.25)",
             opacity: 0,
           }}
@@ -216,20 +216,20 @@ export default function EmotionalBuild() {
         </p>
 
         {/* Interactive Make a Wish Button */}
-        <div ref={buttonRef} style={{ opacity: 0, marginTop: "0.8rem", position: "relative" }}>
+        <div ref={buttonRef} style={{ opacity: 0, marginTop: "0.6rem", position: "relative" }}>
           <button
             onClick={handleMakeWish}
-            className="glass-panel"
+            className="glass-panel wish-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              padding: "10px 24px",
+              padding: "10px 22px",
               borderRadius: "30px",
               border: "1px solid rgba(59,130,246,0.35)",
               color: "#0f1d36",
               cursor: "pointer",
-              fontSize: "0.88rem",
+              fontSize: "clamp(0.8rem, 2.2vw, 0.88rem)",
               fontWeight: 500,
               letterSpacing: "0.04em",
               boxShadow: "0 8px 25px rgba(37,99,235,0.15)",
@@ -252,9 +252,9 @@ export default function EmotionalBuild() {
                 left: w.x,
                 top: w.y,
                 pointerEvents: "none",
-                padding: "6px 14px",
+                padding: "6px 12px",
                 borderRadius: "20px",
-                fontSize: "0.78rem",
+                fontSize: "0.74rem",
                 fontWeight: 600,
                 color: "#2563eb",
                 whiteSpace: "nowrap",

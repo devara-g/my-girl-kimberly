@@ -8,9 +8,8 @@ import { HeartSmallIcon } from "./Icons";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// 6 Curated High-Aesthetic Photos for Ratu Bunga Syakira
+// 3 Curated High-Aesthetic Photos for Ratu Bunga Syakira
 const COLLAGE_ITEMS = [
-  // Column 1
   {
     src: "/img/G-ip79SbQAMdqZX.jpg",
     alt: "Senyum manis mempesona",
@@ -22,18 +21,6 @@ const COLLAGE_ITEMS = [
     column: 1,
   },
   {
-    src: "/img/HOED8g2aAAAIjFx.jpg",
-    alt: "Penuh kehangatan",
-    note: "pancaran hangat di setiap tatapan",
-    date: "'24 08 25",
-    rotate: "2.2deg",
-    aspectRatio: "4/3",
-    objectPosition: "center center",
-    column: 1,
-  },
-
-  // Column 2 (Staggered down for organic scrapbook feel)
-  {
     src: "/img/G5XU67QbYAATumz.jpg",
     alt: "Tawa ceria",
     note: "tawa riang pembawa kebahagiaan",
@@ -44,33 +31,11 @@ const COLLAGE_ITEMS = [
     column: 2,
   },
   {
-    src: "/img/kimmy JKT48 (2).jpg",
-    alt: "Sosok anggun",
-    note: "anggun dan penuh pesona",
-    date: "'26 08 25",
-    rotate: "-2.5deg",
-    aspectRatio: "3/4",
-    objectPosition: "center top",
-    column: 2,
-  },
-
-  // Column 3
-  {
     src: "/img/HBSrsfvb0AEsOB-.jpg",
     alt: "Merajut mimpi",
     note: "setiap mimpi indah yang kau rajut",
     date: "'25 08 25",
     rotate: "-2.8deg",
-    aspectRatio: "3/4",
-    objectPosition: "center 25%",
-    column: 3,
-  },
-  {
-    src: "/img/HF82lq0aEAEcBAe.jpg",
-    alt: "Terus bersinar",
-    note: "tetaplah bersinar, Ratu Bunga Syakira",
-    date: "'26 08 25",
-    rotate: "3deg",
     aspectRatio: "3/4",
     objectPosition: "center 25%",
     column: 3,
@@ -236,10 +201,8 @@ export default function MemoryCollage() {
       {/* Handcrafted 3-Column Masonry Scrapbook */}
       <div
         ref={containerRef}
+        className="collage-grid"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
-          gap: "clamp(24px, 3.5vw, 42px)",
           maxWidth: "1160px",
           margin: "0 auto",
           position: "relative",
@@ -250,11 +213,11 @@ export default function MemoryCollage() {
         {columns.map((col, colIdx) => (
           <div
             key={colIdx}
+            className={`collage-column col-${colIdx + 1}`}
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "clamp(28px, 4vw, 48px)",
-              marginTop: col.offset,
+              gap: "clamp(24px, 3.5vw, 42px)",
             }}
           >
             {col.items.map((item, itemIdx) => {
@@ -264,7 +227,7 @@ export default function MemoryCollage() {
                   key={itemIdx}
                   ref={(el) => { itemRefs.current[globalIdx] = el; }}
                   onClick={() => setActivePhoto(item)}
-                  className="polaroid-card"
+                  className="polaroid-card collage-card"
                   style={{
                     transform: `rotate(${item.rotate})`,
                     cursor: "pointer",
@@ -279,6 +242,9 @@ export default function MemoryCollage() {
                       "0 14px 32px -6px rgba(37,99,235,0.12), 0 4px 12px rgba(15,29,54,0.04)",
                     transition:
                       "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease",
+                    maxWidth: "340px",
+                    width: "100%",
+                    margin: "0 auto",
                   }}
                 >
                   {/* Washi Tape Accent */}
@@ -301,7 +267,7 @@ export default function MemoryCollage() {
                       fill
                       loading="lazy"
                       style={{ objectFit: "cover", objectPosition: item.objectPosition }}
-                      sizes="(max-width: 768px) 90vw, 30vw"
+                      sizes="(max-width: 768px) 85vw, 340px"
                     />
                     <div
                       style={{
@@ -321,7 +287,7 @@ export default function MemoryCollage() {
                     <span
                       className="font-handwritten"
                       style={{
-                        fontSize: "1.25rem",
+                        fontSize: "clamp(1.1rem, 2.8vw, 1.25rem)",
                         color: "#0f1d36",
                         display: "inline-flex",
                         alignItems: "center",
@@ -354,19 +320,19 @@ export default function MemoryCollage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "20px",
+            padding: "16px",
           }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
             className="polaroid-card"
             style={{
-              maxWidth: activePhoto.aspectRatio === "3/4" ? "420px" : activePhoto.aspectRatio === "1/1" ? "460px" : "560px",
+              maxWidth: "min(420px, 92vw)",
               width: "100%",
               transform: "rotate(-1deg)",
               animation: "modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
               background: "#ffffff",
-              padding: "16px 16px 20px 16px",
+              padding: "14px 14px 18px 14px",
               borderRadius: "4px",
               boxShadow: "0 25px 60px rgba(37,99,235,0.2)",
             }}
@@ -377,7 +343,7 @@ export default function MemoryCollage() {
                 position: "relative",
                 aspectRatio: activePhoto.aspectRatio,
                 width: "100%",
-                maxHeight: "70vh",
+                maxHeight: "65vh",
                 borderRadius: "2px",
                 overflow: "hidden",
               }}
@@ -388,12 +354,12 @@ export default function MemoryCollage() {
                 fill
                 style={{ objectFit: "cover", objectPosition: activePhoto.objectPosition }}
               />
-              <span className="led-date" style={{ position: "absolute", bottom: "12px", right: "12px" }}>
+              <span className="led-date" style={{ position: "absolute", bottom: "10px", right: "10px" }}>
                 {activePhoto.date}
               </span>
             </div>
-            <div style={{ paddingTop: "16px", textAlign: "center" }}>
-              <p className="font-handwritten" style={{ fontSize: "1.65rem", color: "#0f1d36", fontWeight: 500 }}>
+            <div style={{ paddingTop: "14px", textAlign: "center" }}>
+              <p className="font-handwritten" style={{ fontSize: "clamp(1.25rem, 3.8vw, 1.6rem)", color: "#0f1d36", fontWeight: 500 }}>
                 &ldquo;{activePhoto.note}&rdquo;
               </p>
               <button
@@ -408,9 +374,10 @@ export default function MemoryCollage() {
                   border: "none",
                   cursor: "pointer",
                   fontWeight: 600,
+                  padding: "8px 16px",
                 }}
               >
-                close x
+                close ✕
               </button>
             </div>
           </div>
@@ -418,6 +385,39 @@ export default function MemoryCollage() {
       )}
 
       <style>{`
+        .collage-grid {
+          display: grid;
+          gap: clamp(20px, 3.5vw, 36px);
+        }
+
+        /* Desktop: 3 columns with artistic staggered offsets */
+        @media (min-width: 769px) {
+          .collage-grid {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          .collage-column.col-1 {
+            margin-top: 0px;
+          }
+          .collage-column.col-2 {
+            margin-top: 36px;
+          }
+          .collage-column.col-3 {
+            margin-top: 12px;
+          }
+        }
+
+        /* Mobile: single centered column with natural flow */
+        @media (max-width: 768px) {
+          .collage-grid {
+            grid-template-columns: 1fr;
+            max-width: 360px;
+          }
+          .collage-column {
+            margin-top: 0 !important;
+            gap: 24px !important;
+          }
+        }
+
         @keyframes modalPop {
           0% { transform: scale(0.8) rotate(-3deg); opacity: 0; }
           100% { transform: scale(1) rotate(-1deg); opacity: 1; }

@@ -254,16 +254,16 @@ export default function FinalScene() {
         />
 
         {/* Oversized editorial headline */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.04em", marginBottom: "clamp(2.5rem, 5vw, 4rem)", overflow: "hidden" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.04em", marginBottom: "clamp(2rem, 4.5vw, 4rem)", overflow: "hidden", width: "100%" }}>
           <div
             ref={line1Ref}
             className="font-display"
             style={{
-              fontSize: "clamp(3rem, 10vw, 8rem)",
+              fontSize: "clamp(2.4rem, 8.5vw, 7.5rem)",
               fontWeight: 300,
               fontStyle: "italic",
               lineHeight: 0.98,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.02em",
               color: "rgba(255,255,255,0.92)",
             }}
           >
@@ -273,11 +273,11 @@ export default function FinalScene() {
             ref={line2Ref}
             className="font-display"
             style={{
-              fontSize: "clamp(3rem, 10vw, 8rem)",
+              fontSize: "clamp(2.4rem, 8.5vw, 7.5rem)",
               fontWeight: 700,
               fontStyle: "italic",
               lineHeight: 0.98,
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.02em",
               background: "linear-gradient(115deg, #93c5fd 0%, #60a5fa 40%, #fbbf24 80%, #fde68a 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -289,12 +289,13 @@ export default function FinalScene() {
             ref={line3Ref}
             className="font-display"
             style={{
-              fontSize: "clamp(2rem, 6.5vw, 5.2rem)",
+              fontSize: "clamp(1.65rem, 5.8vw, 5rem)",
               fontWeight: 300,
               fontStyle: "italic",
-              lineHeight: 1.1,
-              letterSpacing: "-0.02em",
+              lineHeight: 1.15,
+              letterSpacing: "-0.015em",
               color: "rgba(219,234,254,0.85)",
+              marginTop: "4px",
             }}
           >
             Ratu Bunga Syakira.
@@ -306,7 +307,7 @@ export default function FinalScene() {
           width: "100%",
           height: "1px",
           background: "linear-gradient(90deg, rgba(96,165,250,0.25), rgba(96,165,250,0.06) 70%, transparent)",
-          marginBottom: "clamp(2rem, 4.5vw, 3.5rem)",
+          marginBottom: "clamp(1.8rem, 4vw, 3.5rem)",
         }} />
 
         {/* Two-column body copy */}
@@ -314,9 +315,10 @@ export default function FinalScene() {
           ref={bodyRef}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
             gap: "clamp(1.2rem, 3vw, 2.8rem)",
-            marginBottom: "clamp(2.5rem, 5vw, 4rem)",
+            marginBottom: "clamp(2rem, 4.5vw, 4rem)",
+            width: "100%",
           }}
         >
           <p
@@ -354,15 +356,15 @@ export default function FinalScene() {
             display: "flex",
             flexDirection: "column",
             gap: "4px",
-            marginBottom: "clamp(3rem, 6vw, 5rem)",
-            paddingLeft: "clamp(1rem, 2.5vw, 1.6rem)",
+            marginBottom: "clamp(2.5rem, 5vw, 4.5rem)",
+            paddingLeft: "clamp(0.9rem, 2vw, 1.6rem)",
             borderLeft: "2px solid rgba(96,165,250,0.28)",
           }}
         >
           <span
             className="font-handwritten"
             style={{
-              fontSize: "clamp(1.55rem, 3.2vw, 2.3rem)",
+              fontSize: "clamp(1.35rem, 3vw, 2.2rem)",
               color: "rgba(147,197,253,0.88)",
               lineHeight: 1.35,
             }}
@@ -372,7 +374,7 @@ export default function FinalScene() {
           <span
             className="font-handwritten"
             style={{
-              fontSize: "clamp(1.55rem, 3.2vw, 2.3rem)",
+              fontSize: "clamp(1.35rem, 3vw, 2.2rem)",
               color: "rgba(251,191,36,0.80)",
               lineHeight: 1.35,
             }}
@@ -384,18 +386,22 @@ export default function FinalScene() {
         {/* CTA buttons */}
         <div
           ref={ctaRef}
+          className="final-cta-group"
           style={{
             display: "flex",
             alignItems: "center",
             gap: "clamp(12px, 2.5vw, 20px)",
             flexWrap: "wrap",
+            width: "100%",
           }}
         >
           <button
             onClick={() => { setShowFlowerModal(true); fireConfetti(); }}
+            className="final-primary-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "10px",
               padding: "clamp(12px, 2vw, 15px) clamp(22px, 3.5vw, 32px)",
               borderRadius: "4px",
@@ -433,9 +439,11 @@ export default function FinalScene() {
               const rect = e.currentTarget.getBoundingClientRect();
               fireConfetti(rect.left + rect.width / 2, rect.top);
             }}
+            className="final-secondary-btn"
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
               padding: "clamp(12px, 2vw, 15px) clamp(18px, 3vw, 24px)",
               borderRadius: "4px",
@@ -468,6 +476,7 @@ export default function FinalScene() {
 
       {/* Vertical editorial sidebar text */}
       <div
+        className="final-sidebar-text"
         style={{
           position: "absolute",
           right: "clamp(14px, 2.5vw, 36px)",
@@ -489,6 +498,24 @@ export default function FinalScene() {
       </div>
 
       <FlowerModal isOpen={showFlowerModal} onClose={() => setShowFlowerModal(false)} />
+
+      <style>{`
+        @media (max-width: 768px) {
+          .final-sidebar-text {
+            display: none !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .final-cta-group {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .final-primary-btn,
+          .final-secondary-btn {
+            width: 100% !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
