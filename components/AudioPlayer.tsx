@@ -1,28 +1,134 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MusicNoteIcon } from "./Icons";
 
 interface AudioPlayerProps {
   autoPlayTrigger?: boolean;
 }
 
-export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+interface TrackInfo {
+  id: "bazzi" | "daniel";
+  src: string;
+  artist: string;
+  title: string;
+  startTime: number;
+  endTime: number; // in seconds; 0 means full song
+  loop: boolean;
+}
 
-  // Play audio safely
+const TRACKS: TrackInfo[] = [
+  {
+    id: "bazzi",
+    src: "/bazzi.mp3",
+    artist: "Bazzi feat. Camila Cabello",
+    title: "Beautiful",
+    startTime: 18,
+    endTime: 99, // 1 minute 39 seconds
+    loop: false,
+  },
+  {
+    id: "daniel",
+    src: "/transform.mp3",
+    artist: "Daniel Caesar",
+    title: "Transform (feat. Charlotte Day Wilson)",
+    startTime: 0,
+    endTime: 0, // full song
+    loop: true,
+  },
+];
+
+export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(18);
+  const [duration, setDuration] = useState(99);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const currentTrackIndexRef = useRef(0);
+  currentTrackIndexRef.current = currentTrackIndex;
+
+  const currentTrack = TRACKS[currentTrackIndex];
+
+  // Switch to specific track index and start playing
+  const loadAndPlayTrack = (index: number, autoStart: boolean = true) => {
+    const track = TRACKS[index];
+    if (!track) return;
+
+    setCurrentTrackIndex(index);
+    setCurrentTime(track.startTime);
+    setDuration(track.endTime > 0 ? track.endTime : 280);
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.removeAttribute("src");
+      audioRef.current.load();
+    }
+
+    const audio = new Audio(track.src);
+    audio.preload = "auto";
+    audio.loop = track.loop;
+    audioRef.current = audio;
+
+    const onMeta = () => {
+      try {
+        if (track.startTime > 0) {
+          audio.currentTime = track.startTime;
+        }
+      } catch {}
+      setDuration(track.endTime > 0 ? track.endTime : audio.duration || 0);
+    };
+
+    audio.addEventListener("loadedmetadata", onMeta);
+
+    audio.addEventListener("timeupdate", () => {
+      setCurrentTime(audio.currentTime);
+
+      // Check if Bazzi has reached 1:39 (99s)
+      if (track.endTime > 0 && audio.currentTime >= track.endTime) {
+        if (index + 1 < TRACKS.length) {
+          loadAndPlayTrack(index + 1, true);
+        }
+      }
+    });
+
+    audio.addEventListener("ended", () => {
+      if (index + 1 < TRACKS.length) {
+        loadAndPlayTrack(index + 1, true);
+      }
+    });
+
+    if (autoStart) {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+            if (track.startTime > 0 && audio.currentTime < track.startTime) {
+              audio.currentTime = track.startTime;
+            }
+          })
+          .catch(() => {
+            setIsPlaying(false);
+          });
+      }
+    }
+  };
+
   const playAudio = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
+    let audio = audioRef.current;
+    if (!audio) {
+      loadAndPlayTrack(currentTrackIndexRef.current, true);
+      return;
+    }
 
     try {
+      const track = TRACKS[currentTrackIndexRef.current];
+      if (track && track.startTime > 0 && audio.currentTime < track.startTime) {
+        audio.currentTime = track.startTime;
+      }
       await audio.play();
       setIsPlaying(true);
     } catch {
-      // Browser blocked completely unprompted sound, will auto-resume on first gesture/scroll
       setIsPlaying(false);
     }
   };
@@ -43,38 +149,14 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
     }
   };
 
-  // Initialize HTMLAudioElement & Auto-play immediately
+  // Initial setup: start on first track (Bazzi at 0:30)
   useEffect(() => {
-    const audio = new Audio("/transform.mp3");
-    audio.preload = "auto";
-    audio.loop = true;
-    audioRef.current = audio;
-
-    const handleLoadedMetadata = () => {
-      setDuration(audio.duration || 0);
-    };
-
-    const handleTimeUpdate = () => {
-      setCurrentTime(audio.currentTime);
-    };
-
-    const handleEnded = () => {
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    };
-
-    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.addEventListener("timeupdate", handleTimeUpdate);
-    audio.addEventListener("ended", handleEnded);
-
-    // Attempt instant autoplay immediately on page load
-    playAudio();
+    loadAndPlayTrack(0, true);
 
     return () => {
-      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      audio.removeEventListener("timeupdate", handleTimeUpdate);
-      audio.removeEventListener("ended", handleEnded);
-      audio.pause();
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     };
   }, []);
 
@@ -85,7 +167,7 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
     }
   }, [autoPlayTrigger]);
 
-  // Comprehensive instant fallback: Auto-play on first scroll, mouse movement, touch, or any user gesture
+  // Fallback: Resume play on first user gesture
   useEffect(() => {
     const triggerInstantPlay = () => {
       if (audioRef.current && audioRef.current.paused) {
@@ -188,7 +270,9 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
               whiteSpace: "nowrap",
             }}
           >
-            {isPlaying ? `Daniel Caesar · ${formatTime(currentTime)} / ${formatTime(duration || 280)}` : "Daniel Caesar · Transform"}
+            {isPlaying
+              ? `${currentTrack.artist} · ${formatTime(currentTime)} / ${formatTime(duration || (currentTrack.endTime || 280))}`
+              : `${currentTrack.artist} · ${currentTrack.title}`}
           </span>
           <span
             className="font-handwritten"
@@ -200,10 +284,10 @@ export default function AudioPlayer({ autoPlayTrigger }: AudioPlayerProps) {
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              maxWidth: "180px",
+              maxWidth: "200px",
             }}
           >
-            Transform
+            {currentTrack.title}
           </span>
         </div>
 
